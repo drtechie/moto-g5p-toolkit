@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Moto G5 Plus Toolkit</title>
+
+  <link rel="stylesheet" href="assets/css/variables.css">
+  <link rel="stylesheet" href="assets/css/nativize.css">
+  <link rel="stylesheet" href="assets/css/global.css">
+  <link rel="stylesheet" href="assets/css/about.css">
+  <link rel="stylesheet" href="assets/css/nav.css">
+  <link rel="stylesheet" href="assets/css/section.css">
+  <link rel="stylesheet" href="assets/css/demo.css">
+  <link rel="stylesheet" href="assets/css/github.css">
+  <link rel="stylesheet" href="assets/semantic/dist/semantic.min.css">
+
+  <link rel="import" href="sections/about.html">
+  <link rel="import" href="sections/instructions/detailed.html">
+  <link rel="import" href="sections/menus/menus.html">
+  <link rel="import" href="sections/menus/shortcuts.html">
+  <link rel="import" href="sections/presentation/ex-links-file-manager.html">
+  <link rel="import" href="sections/presentation/dialogs.html">
+  <link rel="import" href="sections/presentation/start-sternberg.html">
+  <link rel="import" href="sections/presentation/simulate-latency.html">
+  <link rel="import" href="sections/device/info.html">
+  <link rel="import" href="sections/device/more-tools.html">
+  <link rel="import" href="sections/system/app-sys-information.html">
+  <link rel="import" href="sections/system/clipboard.html">
+  <link rel="import" href="sections/system/protocol-handler.html">
+  <link rel="import" href="sections/media/pdf.html">
+  <link rel="import" href="sections/media/desktop-capturer.html">
+</head>
+<body>
+
+  <nav class="nav js-nav">
+    <header class="nav-header">
+      <h2 class="nav-title">Moto G<sup>5+</sup> <strong>Toolkit</strong></h2>
+      <div class="margin-top-10">
+        <a class="ui blue image label" id="device-status">
+          <span id="status-device-id"></span>
+          <div class="detail"><span id="status-connection"></span></div>
+        </a>
+      </div>
+    </header>
+
+    <div class="nav-item u-category-instructions">
+      <h5 class="nav-category">
+        <svg class="nav-icon"><use xlink:href="assets/img/icons.svg#icon-file"></use></svg>
+        Instruction
+      </h5>
+      <button type="button" id="button-detailed" data-section="detailed" class="nav-button">Get detailed <em>instructions</em></button>
+    </div>
+
+    <div class="nav-item u-category-menu">
+      <h5 class="nav-category">
+        <svg class="nav-icon"><use xlink:href="assets/img/icons.svg#icon-terminal"></use></svg>
+        Bootloader
+      </h5>
+      <button type="button" id="button-shortcuts" data-section="shortcuts" class="nav-button">Get unlock <em>code</em></button>
+      <button type="button" id="button-menus" data-section="menus" class="nav-button">Unlock <em>bootloader</em> </button>
+    </div>
+
+    <div class="nav-item u-category-presentation">
+      <h5 class="nav-category">
+        <svg class="nav-icon"><use xlink:href="assets/img/icons.svg#icon-flash"></use></svg>
+        Recovery
+      </h5>
+      <button type="button" id="button-ex-links-file-manager" data-section="ex-links-file-manager" class="nav-button">Flash <em>TWRP</em> recovery</button>
+      <button type="button" id="button-simulate-latency" data-section="simulate-latency" class="nav-button">Flash <em>boot_image</em></button>
+      <button type="button" id="button-dialogs" data-section="dialogs" class="nav-button">Push <em>SuperSU</em></button>
+      <button type="button" id="button-start-sternberg" data-section="start-sternberg" class="nav-button">Push <em>wlan_custom</em></button>
+    </div>
+
+    <div class="nav-item u-category-device">
+      <h5 class="nav-category">
+        <svg class="nav-icon"><use xlink:href="assets/img/icons.svg#icon-mobile"></use></svg>
+        Device
+      </h5>
+      <button type="button" id="button-info" data-section="info" class="nav-button">Get Device <em>information</em></button>
+      <button type="button" id="button-more-tools" data-section="more-tools" class="nav-button">More <em>tools</em></button>
+    </div>
+    <div class="nav-item u-category-system">
+      <h5 class="nav-category">
+        <svg class="nav-icon"><use xlink:href="assets/img/icons.svg#icon-history"></use></svg>
+        Backup
+      </h5>
+      <button type="button" id="button-app-sys-information" data-section="app-sys-information" class="nav-button" >Create <em>backup</em></button>
+      <button type="button" id="button-clipboard" data-section="clipboard" class="nav-button">Restore <em>backup</em></button>
+    </div>
+
+    <div class="nav-item u-category-media">
+      <h5 class="nav-category">
+        <svg class="nav-icon"><use xlink:href="assets/img/icons.svg#icon-file"></use></svg>
+        Export
+      </h5>
+      <button type="button" id="button-pdf" data-section="pdf" class="nav-button"><em>Print</em> to PDF</button>
+      <button type="button" id="button-desktop-capturer" data-section="desktop-capturer" class="nav-button">Take a <em>screenshot</em></button>
+    </div>
+
+    <footer class="nav-footer">
+      <button type="button" id="button-about" data-modal="about" class="nav-footer-button">About</button>
+      <a class="nav-footer-logo" href="https://github.com">
+        <svg class="nav-footer-icon"><use xlink:href="assets/img/icons.svg#icon-love"></use></svg>
+      </a>
+    </footer>
+  </nav>
+
+  <main class="content js-content"></main>
+
+  <!-- build:remove -->
+  <!-- Connect to server process -->
+  <script>require('electron-connect').client.create()</script>
+  <!-- end:build -->
+
+  <script>
+    require('./assets/imports')
+    require('./assets/ex-links')
+    require('./assets/nav')
+    require('./assets/demo-btns')
+    require('./assets/code-blocks')
+    require('./assets/normalize-shortcuts')
+  </script>
+
+  <script>window.$ = window.jQuery = require('jquery');</script>
+  <script src="assets/semantic/dist/semantic.min.js"></script>
+  <script>
+    $('.ui.dropdown').dropdown();
+  </script>
+  <script>
+    const ipc = require('electron').ipcRenderer
+    const divDeviceStatus = $('#device-status')
+    const divDeviceID = $('#status-device-id')
+    const divConnectionStatus = $('#status-connection')
+    ipc.send('check-status', null)
+    ipc.on('statusDeviceID', function (event, arg) {
+      document.getElementById('status-device-id').innerHTML = `${arg}`
+    })
+    ipc.on('statusConnection', function (event, arg) {
+      document.getElementById('status-connection').innerHTML = `${arg}`
+    })
+    ipc.on('statusLabelColorChange', function (event, arg) {
+      divDeviceStatus.removeClass('blue').removeClass('yellow').removeClass('green').removeClass('red')
+      divDeviceStatus.addClass(`${arg}`)
+    })
+  </script>
+</body>
+</html>

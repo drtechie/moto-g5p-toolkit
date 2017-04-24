@@ -1,0 +1,13 @@
+#Ignore IDE preferences
+/.idea
+
+# OS generated files #
+######################
+.DS_Store
+ehthumbs.db
+._*
+# Icon?
+Thumbs.db
+
+node_modules
+/.sass-cache

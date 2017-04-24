@@ -1,0 +1,86 @@
+<template class="task-template">
+    <section id="simulate-latency-section" class="section js-section u-category-presentation">
+        <header class="section-header">
+            <div class="section-wrapper">
+                <h1>
+                    <svg class="section-icon"><use xlink:href="assets/img/icons.svg#icon-presentation"></use></svg>
+                    Calculate synchronization latency
+                </h1>
+                <h3>This module allows you to simulate an experiment and calculate stimulus synchronization latency.</h3>
+
+                <p>On receiving a MRI sync pulse, the stimulus on the screen is changed. The delay between receiving a pulse and changing the stimulus is calculated.</p>
+
+                <p>Make sure <code>MRI sync pulse key</code> is configured.</p>
+            </div>
+        </header>
+
+        <div class="demo">
+            <div class="demo-wrapper">
+                <button id="start-sternberg-demo-toggle" class="js-container-target demo-toggle-button">Simulation
+                    <div class="demo-meta u-avoid-clicks">Start simulation to assess various timing accuracy</div>
+                </button>
+                <div class="demo-box">
+                    <div class="demo-controls">
+                        <button class="demo-button" id="start-simulation">Assess text stimuli latency</button>
+                    </div>
+                    <p>If a SDU is connected, a full screen experiment window will open in the extended display (SDU) and a mirrored window in the current display. If not, the current display will be used for presenting. To stop the simulation at any point, press <code>CTRL or COMMAND + C</code>.</p>
+
+                    <p>After completion of the simulation, review the logs for any synchronization errors.</p>
+
+                    <div class="demo-controls">
+                        <button class="demo-button" id="start-mri-simulation">Assess MRI timing</button>
+                    </div>
+                    <p>This section is for assessing the observed and expected time difference of MRI sync pulses. To stop the simulation at any point, press <code>CTRL or COMMAND + C</code>.</p>
+
+                    <p>After completion of the simulation, review the logs for any synchronization errors.</p>
+
+                    <div class="demo-controls">
+                        <button class="demo-button" id="start-image-simulation">Assess image stimuli latency</button>
+                    </div>
+                    <p>This section is for assessing the observed and expected time difference of MRI sync pulses. To stop the simulation at any point, press <code>CTRL or COMMAND + C</code>.</p>
+
+                    <p>After completion of the simulation, review the logs for any synchronization errors.</p>
+
+
+                </div>
+            </div>
+        </div>
+
+        <div class="demo">
+            <div class="demo-wrapper">
+                <button id="start-simulation-logs" class="js-container-target demo-toggle-button">Logs
+                    <div class="demo-meta u-avoid-clicks">Details of stimuli synchronization</div>
+                </button>
+                <div class="demo-box">
+                    <div class="demo-controls">
+                        <button class="demo-button" id="clear-simulation-logs">Clear Logs</button>
+                    </div>
+
+                    <p>Simulation logs including timing of MRI sync pulses and accuracy of stimuli presentations will appear here.</p>
+                    <pre><code id="simulation-logs"></code></pre>
+                </div>
+            </div>
+        </div>
+
+        <div class="demo">
+            <div class="demo-wrapper">
+                <button id="start-simulation-results" class="js-container-target demo-toggle-button">Timings
+                    <div class="demo-meta u-avoid-clicks">Timing of MRI sync pulses and stimuli</div>
+                </button>
+                <div class="demo-box">
+                    <div class="demo-controls">
+                        <button class="demo-button" id="clear-simulation-results">Clear Timings</button>
+                    </div>
+
+                    <p>Timestamps of simulation trials.</p>
+                    <pre><code id="simulation-results"></code></pre>
+                </div>
+            </div>
+        </div>
+
+        <script type="text/javascript">
+            require('./renderer-process/presentation/simulation/simulation')
+        </script>
+
+    </section>
+</template>

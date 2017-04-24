@@ -1,0 +1,35 @@
+<template class="task-template">
+  <section id="more-tools-section" class="section js-section u-category-device">
+    <header class="device">
+      <div class="section-wrapper">
+        <h1>
+          <svg class="section-icon"><use xlink:href="assets/img/icons.svg#icon-cogs"></use></svg>
+          More Tools
+        </h1>
+        <h3>This module allows you to set the MRI Sync pulse key and Response keys before starting an experiment. Make sure the USB Human Interface Device (HID) is connected.</h3>
+
+        <p>If you know the key, you can set it manually using the system keyboard. Else, click on the input box and press the keys on the keypad.</p>
+      </div>
+    </header>
+
+    <div class="demo">
+      <div class="demo-wrapper">
+        <button id="async-msg-demo-toggle" class="js-container-target demo-toggle-button">ADB Commands
+          <div class="demo-meta u-avoid-clicks">Various ADB commands to interact with your device</div>
+        </button>
+        <div class="demo-box">
+          <form class="ui form">
+            <div class="demo-controls">
+              <button class="demo-button" id="reboot-to-bootloader-button">Reboot to bootloader</button>
+              <span class="demo-response" id="reboot-to-bootloader-button-reply"></span>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+      require('./renderer-process/device/more-tools')
+    </script>
+  </section>
+</template>

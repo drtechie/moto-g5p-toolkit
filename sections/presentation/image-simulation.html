@@ -1,0 +1,78 @@
+<style>
+body {
+    font-family: system, -apple-system, '.SFNSText-Regular', 'SF UI Text', 'Lucida Grande', 'Segoe UI', Ubuntu, Cantarell, sans-serif;
+    color: #fff;
+    background-color: #000000;
+    text-align: center;
+}
+
+h2 {
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 4rem;
+}
+.image {
+    z-index: 1000;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    margin: auto;
+    overflow: auto;
+}
+#simulation-image-text {
+    z-index: 999;
+}
+</style>
+
+<h2 id="simulation-image-text">Starting</h2>
+<img id="simulation-image" src="" class="image">
+
+<script>
+    const ipc = require('electron').ipcRenderer
+    let images = []
+    let imageload = []
+    let i = 0
+    ipc.on('main-process-image-reply', function (event, arg) {
+        changeImage(arg, function() {
+            // Send callback after text has been changed to main process
+            ipc.send('find-diff')
+        })
+    })
+    ipc.on('sync-image-reply', function (event, arg) {
+        document.getElementById('simulation-image-text').innerHTML = `${arg}`
+    })
+    ipc.on('fetch-image-reply', function (event, arg) {
+        document.getElementById('simulation-image-text').innerHTML = `${arg}`
+    })
+    ipc.on('preload-image', function (event, arg) {
+        for (var k=0; k < arg.length; k++) {
+            images[k] = new Image()
+            images[k].src = arg[k]
+            images[k].onload = function() {
+                imageload = changeText(i);
+                imageload();
+            }
+        }
+    })
+    function changeText() {
+        var change = function() {document.getElementById('simulation-image-text').innerHTML = `Preloading image ${i}`}
+        i++
+        if (i === 100 ) {
+            ipc.send('fetched-images')
+        }
+        return change;
+
+    }
+    function changeImage(arg, cb) {
+        document.getElementById("simulation-image").src = arg
+        cb()
+    }
+</script>

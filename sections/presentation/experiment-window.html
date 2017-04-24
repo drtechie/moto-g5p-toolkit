@@ -1,0 +1,41 @@
+<style>
+body {
+  font-family: system, -apple-system, '.SFNSText-Regular', 'SF UI Text', 'Lucida Grande', 'Segoe UI', Ubuntu, Cantarell, sans-serif;
+  color: #fff;
+  background-color: #000000;
+  text-align: center;
+}
+
+h2 {
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 4rem;
+}
+@font-face {
+  font-family: 'Allerta';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Allerta Regular'), local('Allerta'), url(../../assets/css/fonts/Allerta-Regular.ttf) format('truetype');
+}
+
+.allerta {
+  font-family: 'Allerta';
+}
+
+</style>
+
+<h2 id="stimuli-text" class="allerta"> Left = YES <br/> Right = NO</h2>
+
+<script>
+  const ipc = require('electron').ipcRenderer
+  ipc.on('main-process-reply', function (event, arg) {
+    document.getElementById('stimuli-text').innerHTML = `${arg}`
+  })
+  ipc.on('sync-reply', function (event, arg) {
+    document.getElementById('stimuli-text').innerHTML = `${arg}`
+  })
+</script>

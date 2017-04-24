@@ -1,0 +1,68 @@
+<template class="task-template">
+  <section id="start-sternberg-section" class="section js-section u-category-presentation">
+    <header class="section-header">
+      <div class="section-wrapper">
+        <h1>
+          <svg class="section-icon"><use xlink:href="assets/img/icons.svg#icon-presentation"></use></svg>
+          Present Sternberg Task
+        </h1>
+        <h3>This module allows you to present a new experiment to the selected subject.</h3>
+        <p>Make sure you have configured <code>MRI sync pulse</code> and <code>responses</code>. The Sound and Display Unit (SDU) must be connected.</p>
+
+      </div>
+    </header>
+
+    <div class="demo">
+      <div class="demo-wrapper">
+        <button id="start-sternberg-demo-toggle" class="js-container-target demo-toggle-button">Present
+          <div class="demo-meta u-avoid-clicks">Start presenting task</div>
+        </button>
+        <div class="demo-box">
+          <div class="demo-controls">
+            <button class="demo-button" id="start-sternberg">Start Sternberg Task</button>
+          </div>
+          <p>If a SDU is connected, a full screen experiment window will open in the extended display (SDU) and a mirrored window in the current display. If not, the current display will be used for presenting. To stop the task at any point, press <code>CTRL or COMMAND + C</code>.</p>
+
+          <p>Select a subject to start presenting. After completion of the task review the logs for any synchronization errors.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo">
+      <div class="demo-wrapper">
+        <button id="start-sternberg-logs" class="js-container-target demo-toggle-button">Logs
+          <div class="demo-meta u-avoid-clicks">Details of stimuli synchronization</div>
+        </button>
+        <div class="demo-box">
+          <div class="demo-controls">
+            <button class="demo-button" id="clear-experiment-logs">Clear Logs</button>
+          </div>
+
+          <p>Experiment logs including timing of MRI sync pulses and accuracy of stimuli presentations will appear here.</p>
+          <pre><code id="experiment-logs"></code></pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo">
+      <div class="demo-wrapper">
+        <button id="start-sternberg-results" class="js-container-target demo-toggle-button">Onsets and durations
+          <div class="demo-meta u-avoid-clicks">Details of condition onsets and durations</div>
+        </button>
+        <div class="demo-box">
+          <div class="demo-controls">
+            <button class="demo-button" id="clear-experiment-results">Clear Onsets and Durations</button>
+          </div>
+
+          <p>Onset and duration of each condition will appear here.</p>
+          <pre><code id="experiment-results"></code></pre>
+        </div>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+      require('./renderer-process/presentation/start-sternberg/experiment')
+    </script>
+
+  </section>
+</template>
