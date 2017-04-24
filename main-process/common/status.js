@@ -14,13 +14,19 @@ exports.checkStatus = () => {
   this.setStatus('Checking...', 'No Connection', 'blue')
   adbTools.getMoto().done(function (motoADB) {
     if (motoADB) {
-      me.setStatus(`ONLINE: ${global.deviceID}`, global.connection, 'green')
+      let label
+      if (global.connection === global.strings.adbUnauthorized) {
+        label = 'red'
+      } else {
+        label = 'green'
+      }
+      me.setStatus(`ONLINE: ${global.deviceID}`, global.connection, label)
     } else {
       fastbootTools.getMoto().done(function (motoFastboot) {
         if (motoFastboot) {
           me.setStatus(`ONLINE: ${global.deviceID}`, global.connection, 'yellow')
         } else {
-          me.setStatus('No device', 'No Connection', 'red')
+          me.setStatus(global.strings.noDevice, global.strings.noConnection, 'red')
         }
       })
     }

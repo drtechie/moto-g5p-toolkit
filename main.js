@@ -12,6 +12,17 @@ const debug = /--debug/.test(process.argv[2])
 global.mainWindow = null
 global.db = {}
 
+/**
+* Various strings used across the app
+* */
+global.strings = {}
+global.strings.adb = 'ADB'
+global.strings.adbUnauthorized = 'ADB UNAUTHORIZED'
+global.strings.fastboot = 'FASTBOOT'
+global.strings.recovery = 'RECOVERY'
+global.strings.noDevice = 'NO DEVICE'
+global.strings.noConnection = 'NO CONNECTION'
+
 function initialize () {
   let shouldQuit = makeSingleInstance()
   if (shouldQuit) return app.quit()

@@ -64,7 +64,7 @@ exports.checkMotoName = (deviceID) => {
     if (_.includes(name, 'potter')) {
       found = true
       global.deviceID = deviceID
-      global.connection = 'FASTBOOT'
+      global.connection = global.strings.fastboot
     } else {
       found = false
       global.deviceID = null

@@ -43,7 +43,7 @@ exports.getMoto = () => {
   this.getPhones().done(devices => {
     if (devices.length > 0) {
       forEach(devices, (device) => {
-        this.checkMotoName(device.id).done(foundName => {
+        this.checkMotoName(device.id, device.type).done(foundName => {
           if (foundName) {
             def.resolve(foundName)
           }
@@ -56,20 +56,27 @@ exports.getMoto = () => {
   return def.promise
 }
 
-exports.checkMotoName = (deviceID) => {
+exports.checkMotoName = (deviceID, deviceType) => {
   let def = deferred()
   let found = false
-  this.execute('-s ' + deviceID + ' shell getprop ro.hw.device', name => {
-    if (_.includes(name, 'potter')) {
-      found = true
-      global.deviceID = deviceID
-      global.connection = 'ADB'
-    } else {
-      found = false
-      global.deviceID = null
-      global.connection = null
-    }
+  if (deviceType === 'unauthorized') {
+    found = true
+    global.deviceID = deviceID
+    global.connection = global.strings.adbUnauthorized
     def.resolve(found)
-  })
+  } else {
+    this.execute('-s ' + deviceID + ' shell getprop ro.hw.device', name => {
+      if (_.includes(name, 'potter')) {
+        found = true
+        global.deviceID = deviceID
+        global.connection = global.strings.adb
+      } else {
+        found = false
+        global.deviceID = null
+        global.connection = null
+      }
+      def.resolve(found)
+    })
+  }
   return def.promise
 }
