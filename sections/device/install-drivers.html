@@ -1,0 +1,47 @@
+<template class="task-template">
+  <section id="install-drivers-section" class="section js-section u-category-device">
+    <header class="device">
+      <div class="section-wrapper">
+        <h1>
+          <svg class="section-icon"><use xlink:href="assets/img/icons.svg#icon-cogs"></use></svg>
+          Install Windows Driver
+        </h1>
+        <h3>This module allows you install Motorola drivers for detecting phone in <code>Fastboot</code> mode.</h3>
+
+        <p>For Linux and MacOS, driver install is not required.</p>
+      </div>
+    </header>
+
+    <div class="demo">
+      <div class="demo-wrapper">
+        <button id="32bit-driver-toggle" class="js-container-target demo-toggle-button">32 Bit Driver
+          <div class="demo-meta u-avoid-clicks">x86 driver for 32bit Windows</div>
+        </button>
+        <div class="demo-box">
+          <form class="ui form">
+            <div class="demo-controls">
+              <button class="demo-button" id="32bit-driver-button">Install 32bit driver</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="demo-wrapper">
+        <button id="64bit-driver-toggle" class="js-container-target demo-toggle-button">64 Bit Driver
+          <div class="demo-meta u-avoid-clicks">x64 driver for 64bit Windows</div>
+        </button>
+        <div class="demo-box">
+          <form class="ui form">
+            <div class="demo-controls">
+              <button class="demo-button" id="64bit-driver-button">Install 64bit driver</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+      require('./renderer-process/device/install-drivers')
+    </script>
+  </section>
+</template>

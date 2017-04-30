@@ -8,5 +8,7 @@ ipc.on('extract-unlock-data', function (event, arg) {
   event.sender.send('extract-unlock-data-button-reply', 'Extracting')
   fastbootTools.startUnlockDataExtract().then((data) => {
     sendData(data)
+  }).catch((error) => {
+    event.sender.send('extract-unlock-data-button-reply', error)
   })
 })

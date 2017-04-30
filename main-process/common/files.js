@@ -19,3 +19,11 @@ exports.getFastbootPath = () => {
     return path.resolve(__dirname, '../../files/adbkit/windows/fastboot.exe')
   }
 }
+
+exports.get32BitDriver = () => {
+  return path.resolve(__dirname, '../../files/Motorola_End_User_Driver_Installation_6.3.0_32bit.msi')
+}
+
+exports.get64BitDriver = () => {
+  return path.resolve(__dirname, '../../files/Motorola_End_User_Driver_Installation_6.3.0_64bit.msi')
+}

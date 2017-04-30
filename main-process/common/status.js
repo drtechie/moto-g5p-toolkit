@@ -27,10 +27,10 @@ exports.checkStatus = () => {
     } else {
       label = 'green'
     }
-    this.setStatus(`ONLINE: ${global.deviceID}`, global.connection, label)
+    this.setStatus(global.deviceID, global.connection, label)
   }).catch(() => {
     fastbootTools.getMoto().then(() => {
-      this.setStatus(`ONLINE: ${global.deviceID}`, global.connection, 'yellow')
+      this.setStatus(global.deviceID, global.connection, 'yellow')
     }).catch(() => {
       this.setStatus(global.strings.noDevice, global.strings.noConnection, 'red')
     })

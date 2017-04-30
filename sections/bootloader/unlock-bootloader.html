@@ -3,87 +3,52 @@
     <header class="section-header">
       <div class="section-wrapper">
         <h1>
-          <svg class="section-icon"><use xlink:href="assets/img/icons.svg#icon-menu"></use></svg>
-          Customize Menus
+          <svg class="section-icon"><use xlink:href="assets/img/icons.svg#icon-terminal"></use></svg>
+          Unlock Bootloader
         </h1>
-        <h3>The <code>menu</code> and <code>menuitem</code> modules can be used to create custom native menus.</h3>
+        <h3>This module allows you to unlock bootloader with <code>unique key</code>.</h3>
 
-        <p>There are two kinds of menus: the application (top) menu and context (right-click) menu.</p>
+        <p>
+          If the phone is connected via <code>ADB</code>, it will
+          rebooted to <code>Fastboot</code> mode.
+        </p>
 
-        <p>Open the <a href="http://electron.atom.io/docs/api/menu">full API documentation<span class="u-visible-to-screen-reader">(opens in new window)</span></a> in your browser.</p>
+        <p>
+          <code>This command will erase all user data.</code> Make sure you create a backup before proceeding!
+        </p>
+
+        <p>
+          <code>Unlocking the bootloader will void your warranty.</code> You have been warned!
+        </p>
+
       </div>
     </header>
 
     <div class="demo">
       <div class="demo-wrapper">
-        <button id="application-menu-demo-toggle" class="js-container-target demo-toggle-button">Create an application menu
-          <div class="demo-meta u-avoid-clicks">Supports: Win, OS X, Linux <span class="demo-meta-divider">|</span> Process: Main</div>
+        <button id="unlock-bootloader-toggle" class="js-container-target demo-toggle-button">Unlock Bootloader
+          <div class="demo-meta u-avoid-clicks">Make sure the phone is connected  <span class="demo-meta-divider">|</span> (preferably in <code>Fastboot</code> mode)</div>
         </button>
         <div class="demo-box">
+
           <form class="ui form">
             <div class="field">
-              <label>First Name</label>
-              <input type="text" name="first-name" placeholder="First Name">
+              <label>Enter unique key obtained from Motorola</label>
+              <input type="text" name="unique-key" placeholder="Unique Key" id="unlock-bootloader-unique-key">
             </div>
-            <div class="field">
-              <label>Last Name</label>
-              <input type="text" name="last-name" placeholder="Last Name">
+
+            <div class="demo-controls">
+              <button class="demo-button" id="unlock-bootloader-button">Unlock!</button>
+              <span class="demo-response" id="unlock-bootloader-button-reply"></span>
             </div>
-            <div class="field">
-              <div class="ui selection dropdown">
-                <input type="hidden" name="gender">
-                <i class="dropdown icon"></i>
-                <div class="default text">Gender</div>
-                <div class="menu">
-                  <div class="item" data-value="1">Male</div>
-                  <div class="item" data-value="0">Female</div>
-                </div>
-              </div>
-            </div>
-            <button class="ui button" type="submit">Submit</button>
           </form>
-
-
-          <p>The <code>menu</code> and <code>menuitem</code> modules allow you to customize your application menu. If you don't set any menu, Electron will generate a minimal menu for your app by default.</p>
-
-          <p>This app uses the code below to set the application menu. If you click the 'View' option in the application menu and then the 'App Menu Demo', you'll see an information box displayed.</p>
-          <h5>Main Process</h5>
-
-          <div class="demo-protip">
-            <h2>ProTip</h2>
-            <strong>Know operating system menu differences.</strong>
-            <p>When designing an app for multiple operating systems it's important to be mindful of the ways application menu conventions differ on each operating system.</p>
-            <p>For instance, on Windows, accelerators are set with an <code>&</code>. Naming conventions also vary, like between "Settings" or "Preferences". Below are resources for learning operating system specific standards.</p>
-            <ul>
-              <li><a href="https://developer.apple.com/library/mac/documentation/UserExperience/Conceptual/OSXHIGuidelines/MenuBarMenus.html#//apple_ref/doc/uid/20000957-CH29-SW1">OS X<span class="u-visible-to-screen-reader">(opens in new window)</span></a></li>
-              <li><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/bb226797(v=vs.85).aspx">Windows<span class="u-visible-to-screen-reader">(opens in new window)</span></a></li>
-              <li><a href="https://developer.gnome.org/hig/stable/menu-bars.html.en">Linux<span class="u-visible-to-screen-reader">(opens in new window)</span></a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="demo">
-      <div class="demo-wrapper">
-        <button id="context-menu-demo-toggle" class="js-container-target demo-toggle-button">Create a context menu
-          <div class="demo-meta u-avoid-clicks">Supports: Win, OS X, Linux <span class="demo-meta-divider">|</span> Process: Main</div>
-        </button>
-        <div class="demo-box">
-          <div class="demo-controls">
-            <button class="demo-button" id="context-menu">View Demo</button>
-          </div>
-          <p>A context, or right-click, menu can be created with the <code>menu</code> and <code>menuitem</code> modules as well. You can right-click anywhere in this app or click the demo button to see an example context menu.</p>
-
-          <p>In this demo we use the <code>remote</code> module to access <code>menu</code> and <code>menuitem</code> from the renderer process.</p>
-          <h5>Renderer Process</h5>
 
         </div>
       </div>
     </div>
 
     <script type="text/javascript">
-      require('./renderer-process/bootloader/context-menu')
+      require('./renderer-process/bootloader/unlock-bootloader')
     </script>
 
   </section>

@@ -43,7 +43,8 @@
     "rimraf": "^2.5.2",
     "signcode": "^0.5.0",
     "spectron": "~3.6.0",
-    "standard": "^8.2.0"
+    "standard": "^8.2.0",
+    "extract-zip": "=1.6.0"
   },
   "dependencies": {
     "async-foreach": "^0.1.3",

@@ -25,7 +25,13 @@ exports.getPhones = () => {
     (resolve) => {
       this.execute('devices', data => {
         let deviceArray = []
-        _.split(data, '\n').forEach((value) => {
+        let devices
+        if (process.platform === 'linux' || process.platform === 'darwin') {
+          devices = _.split(data, '\n')
+        } else if (process.platform === 'win32') {
+          devices = _.split(data, '\r\n')
+        }
+        devices.forEach((value) => {
           let tmp = value.split('\t')
           if (tmp.length === 2) {
             deviceArray.push({
@@ -63,7 +69,7 @@ exports.getMoto = () => {
 exports.checkMotoName = (deviceID, deviceType) => {
   return new Promise(
     (resolve, reject) => {
-      if (deviceType === 'unauthorized') {
+      if (deviceType === 'unauthorized' || deviceType === 'offline') {
         statusTools.setDevice(deviceID, global.strings.adbUnauthorized)
         resolve(true)
       } else {

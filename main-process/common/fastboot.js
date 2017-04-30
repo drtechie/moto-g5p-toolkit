@@ -26,7 +26,13 @@ exports.getPhones = () => {
       this.execute('devices', data => {
         if (data !== 'undefined') {
           let deviceArray = []
-          _.split(data, '\n').forEach((value) => {
+          let devices
+          if (process.platform === 'linux' || process.platform === 'darwin') {
+            devices = _.split(data, '\n')
+          } else if (process.platform === 'win32') {
+            devices = _.split(data, '\r\n')
+          }
+          devices.forEach((value) => {
             let tmp = value.split('\t')
             if (tmp.length === 2) {
               deviceArray.push({
@@ -95,8 +101,27 @@ exports.getUnlockData = () => {
     })
 }
 
+exports.unlockBootloader = (uniqueKey) => {
+  return new Promise(
+      (resolve, reject) => {
+        if (global.deviceID && global.connection === global.strings.fastboot) {
+          this.execute('oem unlock ' + uniqueKey, data => {
+            resolve(data)
+          })
+        } else {
+          reject(global.strings.noDevice)
+        }
+      })
+}
+
 exports.prepareUnlockData = (data) => {
-  return _.split(this.getSubString(data, 'data:\n', '\nOKAY'), '\n').join('').replace(/\(bootloader\) /g, '')
+  let linebreak
+  if (process.platform === 'linux' || process.platform === 'darwin') {
+    linebreak = '\n'
+  } else if (process.platform === 'win32') {
+    linebreak = '\r\n'
+  }
+  return _.split(this.getSubString(data, 'data:' + linebreak, linebreak + 'OKAY'), linebreak).join('').replace(/\(bootloader\) /g, '')
 }
 
 exports.getSubString = (data, firstVariable, secondVariable) => {
@@ -156,3 +181,31 @@ exports.startUnlockDataExtract = () => {
     })
 }
 
+exports.startUnlockBootloader = (uniqueKey) => {
+  return new Promise(
+      (resolve, reject) => {
+        if (global.deviceID && global.connection === global.strings.adb) {
+          // If the phone is in ADB mode, reboot!
+          adbTools.rebootToBootloader().then(() => {
+            this.waitForDevice().then(() => {
+              this.unlockBootloader(uniqueKey).then((data) => {
+                resolve(data)
+              })
+            }).catch((error) => {
+              reject(error)
+            })
+          }).catch((error) => {
+            reject(error)
+          })
+        } else if (global.deviceID && global.connection === global.strings.fastboot) {
+          // Phone is connected in Fastboot already
+          this.unlockBootloader(uniqueKey).then((data) => {
+            resolve(data)
+          }).catch((error) => {
+            reject(error)
+          })
+        } else {
+          reject(global.strings.noDevice)
+        }
+      })
+}
