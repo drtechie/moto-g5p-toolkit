@@ -1,0 +1,55 @@
+<template class="task-template">
+  <section id="unlock-data-section" class="section js-section u-category-bootloader">
+    <header class="section-header">
+      <div class="section-wrapper">
+        <h1>
+          <svg class="section-icon"><use xlink:href="assets/img/icons.svg#icon-menu"></use></svg>
+          Bootloader Unlock Data
+        </h1>
+
+        <h3>This module allows you to extract the data to be used for unlocking bootloader.</h3>
+
+        <p>
+          If the phone is connected via <code>ADB</code>, it will
+          rebooted to <code>Fastboot</code> mode.
+        </p>
+
+      </div>
+    </header>
+
+    <div class="demo">
+      <div class="demo-wrapper">
+        <button id="shortcuts-demo-toggle" class="js-container-target demo-toggle-button">Extract unlock data
+          <div class="demo-meta u-avoid-clicks">Make sure the phone is connected  <span class="demo-meta-divider">|</span> (preferably in <code>Fastboot</code> mode)</div>
+        </button>
+        <div class="demo-box">
+          <form class="ui form">
+            <div class="demo-controls">
+              <button class="demo-button" id="extract-unlock-data-button">Extract Unlock Data</button>
+              <span class="demo-response" id="extract-unlock-data-button-reply"></span>
+            </div>
+          </form>
+
+          <div class="demo-protip hidden" id="unlock-data-wrapper">
+            <h2>Unlock Data</h2>
+            <strong>Visit <a href="https://motorola-global-portal.custhelp.com/app/standalone/bootloader/unlock-your-device-a">Motorola </a> website and use the data below.</strong>
+            <p id="unlock-data" class="word-wrap">
+            </p>
+            <form class="ui form">
+              <div class="demo-controls">
+                <button class="demo-button" id="copy-unlock-data-button">Copy to Clipboard</button>
+                <span class="demo-response" id="copy-unlock-data-button-reply"></span>
+              </div>
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+      require('./renderer-process/bootloader/unlock-data')
+    </script>
+
+  </section>
+</template>

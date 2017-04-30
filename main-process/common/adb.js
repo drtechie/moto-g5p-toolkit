@@ -1,7 +1,7 @@
 const { exec } = require('child_process')
-const deferred = require('deferred')
 const _ = require('lodash')
 const files = require('./files')
+const statusTools = require('./status')
 const adb = files.getAdbPath()
 const { forEach } = require('async-foreach')
 
@@ -21,62 +21,74 @@ exports.execute = (args, callback) => {
 }
 
 exports.getPhones = () => {
-  let def = deferred()
-  this.execute('devices', data => {
-    let deviceArray = []
-    _.split(data, '\n').forEach((value) => {
-      let tmp = value.split('\t')
-      if (tmp.length === 2) {
-        deviceArray.push({
-          'id': tmp[0],
-          'type': tmp[1]
+  return new Promise(
+    (resolve) => {
+      this.execute('devices', data => {
+        let deviceArray = []
+        _.split(data, '\n').forEach((value) => {
+          let tmp = value.split('\t')
+          if (tmp.length === 2) {
+            deviceArray.push({
+              'id': tmp[0],
+              'type': tmp[1]
+            })
+          }
         })
-      }
+        resolve(deviceArray)
+      })
     })
-    def.resolve(deviceArray)
-  })
-  return def.promise
 }
 
 exports.getMoto = () => {
-  let def = deferred()
-  this.getPhones().done(devices => {
-    if (devices.length > 0) {
-      forEach(devices, (device) => {
-        this.checkMotoName(device.id, device.type).done(foundName => {
-          if (foundName) {
-            def.resolve(foundName)
-          }
-        })
+  return new Promise(
+    (resolve, reject) => {
+      this.getPhones().then(devices => {
+        if (devices.length > 0) {
+          forEach(devices, (device) => {
+            this.checkMotoName(device.id, device.type).then(foundName => {
+              if (foundName) {
+                resolve(foundName)
+              }
+            }).catch(() => {
+              // do nothing
+            })
+          })
+        } else {
+          reject(false)
+        }
       })
-    } else {
-      def.resolve(false)
-    }
-  })
-  return def.promise
+    })
 }
 
 exports.checkMotoName = (deviceID, deviceType) => {
-  let def = deferred()
-  let found = false
-  if (deviceType === 'unauthorized') {
-    found = true
-    global.deviceID = deviceID
-    global.connection = global.strings.adbUnauthorized
-    def.resolve(found)
-  } else {
-    this.execute('-s ' + deviceID + ' shell getprop ro.hw.device', name => {
-      if (_.includes(name, 'potter')) {
-        found = true
-        global.deviceID = deviceID
-        global.connection = global.strings.adb
+  return new Promise(
+    (resolve, reject) => {
+      if (deviceType === 'unauthorized') {
+        statusTools.setDevice(deviceID, global.strings.adbUnauthorized)
+        resolve(true)
       } else {
-        found = false
-        global.deviceID = null
-        global.connection = null
+        this.execute('-s ' + deviceID + ' shell getprop ro.hw.device', name => {
+          if (_.includes(name, global.strings.deviceName)) {
+            statusTools.setDevice(deviceID, global.strings.adb)
+            resolve(true)
+          } else {
+            statusTools.setDevice(null, null)
+            reject(false)
+          }
+        })
       }
-      def.resolve(found)
     })
-  }
-  return def.promise
+}
+
+exports.rebootToBootloader = () => {
+  return new Promise(
+    (resolve, reject) => {
+      if (global.deviceID && global.connection === global.strings.adb) {
+        this.execute('reboot bootloader', data => {
+          resolve(data)
+        })
+      } else {
+        reject(global.strings.noDevice)
+      }
+    })
 }

@@ -16,6 +16,7 @@ global.db = {}
 * Various strings used across the app
 * */
 global.strings = {}
+global.strings.deviceName = 'potter'
 global.strings.adb = 'ADB'
 global.strings.adbUnauthorized = 'ADB UNAUTHORIZED'
 global.strings.fastboot = 'FASTBOOT'

@@ -156,3 +156,12 @@ kbd {
 .hljs:active {
   outline: 1px solid transparent;
 }
+
+/* Utilities ------------------------ */
+.word-wrap {
+  word-wrap: break-word;
+}
+
+.hidden {
+  display: none;
+}
