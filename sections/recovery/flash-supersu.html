@@ -1,0 +1,45 @@
+<template class="task-template">
+  <section id="flash-supersu-section" class="section js-section u-category-recovery">
+    <header class="section-header">
+      <div class="section-wrapper">
+        <h1>
+          <svg class="section-icon"><use xlink:href="assets/img/icons.svg#icon-flash"></use></svg>
+          Flash SuperSU
+        </h1>
+        <h3>This module allows you to flash SuperSU created by <a href="https://download.chainfire.eu/696/supersu/">@chainfire</a>.</h3>
+
+        <p>A unlocked bootloader is mandatory.</p>
+      </div>
+    </header>
+
+    <div class="demo">
+      <div class="demo-wrapper">
+        <button id="supersu-toggle" class="js-container-target demo-toggle-button">Flash SuperSU
+          <div class="demo-meta u-avoid-clicks">Make sure the phone is connected</div>
+        </button>
+        <div class="demo-box">
+          <p>
+            Phone will be rebooted to <code>Recovery</code> mode
+          </p>
+
+          <form class="ui form">
+            <div class="demo-controls">
+              <button class="demo-button" id="flash-supersu-button">Flash SuperSU</button>
+              <span class="demo-response" id="flash-supersu-button-reply"></span>
+            </div>
+          </form>
+
+          <div class="demo-protip hidden" id="flash-supersu-info-wrapper">
+            <h2>Congrats! Reboot and Enjoy Root!</h2>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+      require('./renderer-process/recovery/flash-supersu')
+    </script>
+
+  </section>
+</template>

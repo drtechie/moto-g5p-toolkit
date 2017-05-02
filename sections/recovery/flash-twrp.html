@@ -1,0 +1,57 @@
+<template class="task-template">
+  <section id="flash-twrp-section" class="section js-section u-category-recovery">
+    <header class="section-header">
+      <div class="section-wrapper">
+        <h1>
+          <svg class="section-icon"><use xlink:href="assets/img/icons.svg#icon-flash"></use></svg>
+          Flash TWRP Recovery
+        </h1>
+        <h3>This module allows you to flash TWRP custom recovery to the device.</h3>
+
+        <p>A unlocked bootloader is mandatory.</p>
+      </div>
+    </header>
+
+    <div class="demo">
+      <div class="demo-wrapper">
+        <button id="twrp-toggle" class="js-container-target demo-toggle-button">Flash TWRP Recovery
+          <div class="demo-meta u-avoid-clicks">Make sure the phone is connected  <span class="demo-meta-divider">|</span> preferably in <code>Fastboot</code> mode</div>
+        </button>
+        <div class="demo-box">
+          <p>
+            If the phone is connected via <code>ADB</code>, it will
+            rebooted to <code>Fastboot</code> mode.
+          </p>
+
+          <p>
+            <code>After flashing the recovery you will have to erase data partition.</code> Make sure you create a backup before proceeding!
+          </p>
+          <form class="ui form">
+            <div class="demo-controls">
+              <button class="demo-button" id="flash-twrp-button">Flash TWRP</button>
+              <span class="demo-response" id="flash-twrp-button-reply"></span>
+            </div>
+          </form>
+
+          <div class="demo-protip" id="flash-twrp-info-wrapper">
+            <h2>After flashing recovery</h2>
+            <ol>
+              <li>Reboot to Recovery</li>
+              <li>Press <code>Cancel</code> when asked for decryption</li>
+              <li>Then, <code>Swipe to Allow Modifications</code></li>
+              <li><code>Wipe</code> and <code>Format Data</code></li>
+              <li>Reboot to Recovery again</li>
+              <li>Proceed to flashing boot image</li>
+            </ol>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+      require('./renderer-process/recovery/flash-twrp')
+    </script>
+
+  </section>
+</template>

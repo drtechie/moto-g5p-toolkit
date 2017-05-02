@@ -22,8 +22,10 @@ exports.checkStatus = () => {
   this.setStatus('Checking...', 'No Connection', 'blue')
   adbTools.getMoto().then(() => {
     let label
-    if (global.connection === global.strings.adbUnauthorized) {
+    if (global.connection === global.strings.adbUnauthorized || global.connection === global.strings.adbOffline) {
       label = 'red'
+    } else if (global.connection === global.strings.recovery) {
+      label = 'orange'
     } else {
       label = 'green'
     }

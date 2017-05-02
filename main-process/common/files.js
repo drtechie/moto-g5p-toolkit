@@ -27,3 +27,19 @@ exports.get32BitDriver = () => {
 exports.get64BitDriver = () => {
   return path.resolve(__dirname, '../../files/Motorola_End_User_Driver_Installation_6.3.0_64bit.msi')
 }
+
+exports.getTWRP = () => {
+  return path.resolve(__dirname, '../../files/twrp-3.1.0-0-potter.img')
+}
+
+exports.getBootImage = () => {
+  return path.resolve(__dirname, '../../files/potter_boot_test7.img')
+}
+
+exports.getWlanCustom = () => {
+  return path.resolve(__dirname, '../../files/wlan_custom.zip')
+}
+
+exports.getSuperSU = () => {
+  return path.resolve(__dirname, '../../files/SR3-SuperSU-v2.79-SR3-20170114223742.zip')
+}

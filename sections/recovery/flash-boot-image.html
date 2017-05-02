@@ -1,0 +1,50 @@
+<template class="task-template">
+  <section id="flash-boot-image-section" class="section js-section u-category-recovery">
+    <header class="section-header">
+      <div class="section-wrapper">
+        <h1>
+          <svg class="section-icon"><use xlink:href="assets/img/icons.svg#icon-flash"></use></svg>
+          Flash Boot Image
+        </h1>
+        <h3>This module allows you to flash boot image created by <a href="https://forum.xda-developers.com/member.php?u=409801">@vanche</a>.</h3>
+
+        <p>A unlocked bootloader is mandatory.</p>
+      </div>
+    </header>
+
+    <div class="demo">
+      <div class="demo-wrapper">
+        <button id="boot-image-toggle" class="js-container-target demo-toggle-button">Flash Boot Image
+          <div class="demo-meta u-avoid-clicks">Make sure the phone is connected  <span class="demo-meta-divider">|</span> preferably in <code>Fastboot</code> mode</div>
+        </button>
+        <div class="demo-box">
+          <p>
+            If the phone is connected via <code>ADB</code>, it will
+            rebooted to <code>Fastboot</code> mode.
+          </p>
+
+          <form class="ui form">
+            <div class="demo-controls">
+              <button class="demo-button" id="flash-boot-image-button">Flash Boot Image</button>
+              <span class="demo-response" id="flash-boot-image-button-reply"></span>
+            </div>
+          </form>
+
+          <div class="demo-protip" id="flash-boot-image-info-wrapper">
+            <h2>After flashing boot image</h2>
+            <ol>
+              <li>Next step is installing wlan_custom.</li>
+              <li>WLAN will not work after flashing custom boot image. Flash wlan_custom to fix this.</li>
+            </ol>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+      require('./renderer-process/recovery/flash-boot-image')
+    </script>
+
+  </section>
+</template>

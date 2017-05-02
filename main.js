@@ -21,6 +21,7 @@ global.strings.adb = 'ADB'
 global.strings.adbUnauthorized = 'ADB UNAUTHORIZED'
 global.strings.fastboot = 'FASTBOOT'
 global.strings.recovery = 'RECOVERY'
+global.strings.adbOffline = 'OFFLINE'
 global.strings.noDevice = 'NO DEVICE'
 global.strings.noConnection = 'NO CONNECTION'
 

@@ -18,10 +18,10 @@
   <link rel="import" href="sections/instructions/detailed.html">
   <link rel="import" href="sections/bootloader/unlock-data.html">
   <link rel="import" href="sections/bootloader/unlock-bootloader.html">
-  <link rel="import" href="sections/presentation/ex-links-file-manager.html">
-  <link rel="import" href="sections/presentation/dialogs.html">
-  <link rel="import" href="sections/presentation/start-sternberg.html">
-  <link rel="import" href="sections/presentation/simulate-latency.html">
+  <link rel="import" href="sections/recovery/flash-twrp.html">
+  <link rel="import" href="sections/recovery/flash-boot-image.html">
+  <link rel="import" href="sections/recovery/flash-supersu.html">
+  <link rel="import" href="sections/recovery/flash-wlan.html">
   <link rel="import" href="sections/device/info.html">
   <link rel="import" href="sections/device/more-tools.html">
   <link rel="import" href="sections/device/install-drivers.html">
@@ -61,15 +61,15 @@
       <button type="button" id="button-unlock-bootloader" data-section="unlock-bootloader" class="nav-button">Unlock <em>bootloader</em> </button>
     </div>
 
-    <div class="nav-item u-category-presentation">
+    <div class="nav-item u-category-recovery">
       <h5 class="nav-category">
         <svg class="nav-icon"><use xlink:href="assets/img/icons.svg#icon-flash"></use></svg>
         Recovery
       </h5>
-      <button type="button" id="button-ex-links-file-manager" data-section="ex-links-file-manager" class="nav-button">Flash <em>TWRP</em> recovery</button>
-      <button type="button" id="button-simulate-latency" data-section="simulate-latency" class="nav-button">Flash <em>boot_image</em></button>
-      <button type="button" id="button-dialogs" data-section="dialogs" class="nav-button">Push <em>SuperSU</em></button>
-      <button type="button" id="button-start-sternberg" data-section="start-sternberg" class="nav-button">Push <em>wlan_custom</em></button>
+      <button type="button" id="button-flash-twrp" data-section="flash-twrp" class="nav-button">Flash <em>TWRP</em> recovery</button>
+      <button type="button" id="button-flash-boot-image" data-section="flash-boot-image" class="nav-button">Flash <em>boot_image</em></button>
+      <button type="button" id="button-flash-wlan-custom" data-section="flash-wlan-custom" class="nav-button">Flash <em>wlan_custom</em></button>
+      <button type="button" id="button-flash-supersu" data-section="flash-supersu" class="nav-button">Flash <em>SuperSU</em></button>
     </div>
 
     <div class="nav-item u-category-device">
@@ -135,13 +135,13 @@
     const divConnectionStatus = $('#status-connection')
     ipc.send('check-status', null)
     ipc.on('statusDeviceID', function (event, arg) {
-      document.getElementById('status-device-id').innerHTML = `${arg}`
+      divDeviceID.html(`${arg}`)
     })
     ipc.on('statusConnection', function (event, arg) {
-      document.getElementById('status-connection').innerHTML = `${arg}`
+      divConnectionStatus.html(`${arg}`)
     })
     ipc.on('statusLabelColorChange', function (event, arg) {
-      divDeviceStatus.removeClass('blue').removeClass('yellow').removeClass('green').removeClass('red')
+      divDeviceStatus.removeClass('blue').removeClass('yellow').removeClass('green').removeClass('red').removeClass('orange')
       divDeviceStatus.addClass(`${arg}`)
     })
   </script>

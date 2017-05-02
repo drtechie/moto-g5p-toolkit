@@ -128,7 +128,7 @@ exports.getSubString = (data, firstVariable, secondVariable) => {
   return _.split(_.split(data, firstVariable)[1], secondVariable)[0]
 }
 
-exports.waitForDevice = () => {
+exports.waitForFastbootDevice = () => {
   return new Promise(
     (resolve, reject) => {
       if (global.deviceID && global.connection === global.strings.fastboot) {
@@ -158,7 +158,7 @@ exports.startUnlockDataExtract = () => {
       if (global.deviceID && global.connection === global.strings.adb) {
         // If the phone is in ADB mode, reboot!
         adbTools.rebootToBootloader().then(() => {
-          this.waitForDevice().then(() => {
+          this.waitForFastbootDevice().then(() => {
             this.getUnlockData().then((data) => {
               resolve(data)
             })
@@ -187,7 +187,7 @@ exports.startUnlockBootloader = (uniqueKey) => {
         if (global.deviceID && global.connection === global.strings.adb) {
           // If the phone is in ADB mode, reboot!
           adbTools.rebootToBootloader().then(() => {
-            this.waitForDevice().then(() => {
+            this.waitForFastbootDevice().then(() => {
               this.unlockBootloader(uniqueKey).then((data) => {
                 resolve(data)
               })
@@ -208,4 +208,88 @@ exports.startUnlockBootloader = (uniqueKey) => {
           reject(global.strings.noDevice)
         }
       })
+}
+
+exports.flashTWRP = () => {
+  return new Promise(
+    (resolve, reject) => {
+      if (global.deviceID && global.connection === global.strings.fastboot) {
+        this.execute('flash recovery ' + files.getTWRP(), () => {
+          resolve('Recovery flashed. Rebooting to Recovery.')
+        })
+      } else {
+        reject(global.strings.noDevice)
+      }
+    })
+}
+
+exports.startFlashTWRP = () => {
+  return new Promise(
+    (resolve, reject) => {
+      if (global.deviceID && global.connection === global.strings.adb) {
+        // If the phone is in ADB mode, reboot!
+        adbTools.rebootToBootloader().then(() => {
+          this.waitForFastbootDevice().then(() => {
+            this.flashTWRP().then((data) => {
+              resolve(data)
+            })
+          }).catch((error) => {
+            reject(error)
+          })
+        }).catch((error) => {
+          reject(error)
+        })
+      } else if (global.deviceID && global.connection === global.strings.fastboot) {
+        // Phone is connected in Fastboot already
+        this.flashTWRP().then((data) => {
+          resolve(data)
+        }).catch((error) => {
+          reject(error)
+        })
+      } else {
+        reject(global.strings.noDevice)
+      }
+    })
+}
+
+exports.flashBootImage = () => {
+  return new Promise(
+    (resolve, reject) => {
+      if (global.deviceID && global.connection === global.strings.fastboot) {
+        this.execute('flash boot ' + files.getBootImage(), () => {
+          resolve('Recovery flashed. Rebooting to Recovery.')
+        })
+      } else {
+        reject(global.strings.noDevice)
+      }
+    })
+}
+
+exports.startFlashBootImage = () => {
+  return new Promise(
+    (resolve, reject) => {
+      if (global.deviceID && (global.connection === global.strings.adb || global.strings.recovery)) {
+        // If the phone is in ADB mode, reboot!
+        adbTools.rebootToBootloader().then(() => {
+          this.waitForFastbootDevice().then(() => {
+            this.flashBootImage().then((data) => {
+              resolve(data)
+            })
+          }).catch((error) => {
+            reject(error)
+          })
+        }).catch((error) => {
+          reject(error)
+        })
+      } else if (global.deviceID && global.connection === global.strings.fastboot) {
+        // Phone is connected in Fastboot already
+        this.flashBootImage().then((data) => {
+          resolve(data)
+        }).catch((error) => {
+          reject(error)
+        })
+      } else {
+        reject(global.strings.noDevice)
+      }
+    })
 }

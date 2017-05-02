@@ -1,0 +1,49 @@
+<template class="task-template">
+    <section id="flash-wlan-custom-section" class="section js-section u-category-recovery">
+        <header class="section-header">
+            <div class="section-wrapper">
+                <h1>
+                    <svg class="section-icon"><use xlink:href="assets/img/icons.svg#icon-flash"></use></svg>
+                    Flash Wlan
+                </h1>
+                <h3>This module allows you to flash wlan_custom created by <a href="https://forum.xda-developers.com/member.php?u=409801">@vanche</a>.</h3>
+
+                <p>A unlocked bootloader is mandatory.</p>
+            </div>
+        </header>
+
+        <div class="demo">
+            <div class="demo-wrapper">
+                <button id="wlan-toggle" class="js-container-target demo-toggle-button">Flash wlan_custom
+                    <div class="demo-meta u-avoid-clicks">Make sure the phone is connected </div>
+                </button>
+                <div class="demo-box">
+                    <p>
+                        Phone will be rebooted to <code>Recovery</code> mode
+                    </p>
+
+                    <form class="ui form">
+                        <div class="demo-controls">
+                            <button class="demo-button" id="flash-wlan-custom-button">Flash wlan_custom</button>
+                            <span class="demo-response" id="flash-wlan-custom-button-reply"></span>
+                        </div>
+                    </form>
+
+                    <div class="demo-protip" id="flash-wlan-custom-info-wrapper">
+                        <h2>After flashing wlan_custom</h2>
+                        <ol>
+                            <li>Next step is installing SuperSU</li>
+                            <li>If you want to use apps like Snapchat that require safety net feature, reboot the phone and install the same before flashing SuperSU</li>
+                        </ol>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <script type="text/javascript">
+          require('./renderer-process/recovery/flash-wlan-custom')
+        </script>
+
+    </section>
+</template>
