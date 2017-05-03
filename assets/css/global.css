@@ -165,3 +165,6 @@ kbd {
 .hidden {
   display: none;
 }
+.padding-top-10 {
+  padding-top: 10px;
+}

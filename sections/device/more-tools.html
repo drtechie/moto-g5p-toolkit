@@ -6,15 +6,15 @@
           <svg class="section-icon"><use xlink:href="assets/img/icons.svg#icon-cogs"></use></svg>
           More Tools
         </h1>
-        <h3>This module allows you to set the MRI Sync pulse key and Response keys before starting an experiment. Make sure the USB Human Interface Device (HID) is connected.</h3>
+        <h3>This module allows you to execute some commonly used commands.</h3>
 
-        <p>If you know the key, you can set it manually using the system keyboard. Else, click on the input box and press the keys on the keypad.</p>
+        <p>Commonly used <code>ADB</code> and <code>Fastboot</code> commands.</p>
       </div>
     </header>
 
     <div class="demo">
       <div class="demo-wrapper">
-        <button id="async-msg-demo-toggle" class="js-container-target demo-toggle-button">ADB Commands
+        <button id="adb-commands-toggle" class="js-container-target demo-toggle-button">ADB Commands
           <div class="demo-meta u-avoid-clicks">Various ADB commands to interact with your device</div>
         </button>
         <div class="demo-box">
@@ -22,6 +22,34 @@
             <div class="demo-controls">
               <button class="demo-button" id="reboot-to-bootloader-button">Reboot to bootloader</button>
               <span class="demo-response" id="reboot-to-bootloader-button-reply"></span>
+            </div>
+            <div class="demo-controls padding-top-10">
+              <button class="demo-button" id="reboot-to-recovery-button">Reboot to recovery</button>
+              <span class="demo-response" id="reboot-to-recovery-button-reply"></span>
+            </div>
+            <div class="demo-controls padding-top-10">
+              <button class="demo-button" id="reboot-system-button">Reboot system</button>
+              <span class="demo-response" id="reboot-system-button-reply"></span>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo">
+      <div class="demo-wrapper">
+        <button id="fastboot-commands-toggle" class="js-container-target demo-toggle-button">Fastboot Commands
+          <div class="demo-meta u-avoid-clicks">Various Fastboot commands to interact with your device</div>
+        </button>
+        <div class="demo-box">
+          <form class="ui form">
+            <div class="demo-controls">
+              <button class="demo-button" id="reboot-to-bootloader-fb-button">Reboot to bootloader</button>
+              <span class="demo-response" id="reboot-to-bootloader-fb-button-reply"></span>
+            </div>
+            <div class="demo-controls padding-top-10">
+              <button class="demo-button" id="reboot-system-fb-button">Reboot system</button>
+              <span class="demo-response" id="reboot-system-fb-button-reply"></span>
             </div>
           </form>
         </div>

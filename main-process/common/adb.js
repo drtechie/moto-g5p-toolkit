@@ -72,7 +72,7 @@ exports.checkMotoName = (deviceID, deviceType) => {
       if (deviceType === 'unauthorized') {
         statusTools.setDevice(deviceID, global.strings.adbUnauthorized)
         resolve(true)
-      } else if (_.includes(deviceType,'permissions')) {
+      } else if (_.includes(deviceType, 'permissions')) {
         statusTools.setDevice(deviceID, global.strings.adbNoPermissions)
         resolve(true)
       } else if (deviceType === 'offline') {
@@ -111,8 +111,21 @@ exports.rebootToBootloader = () => {
 exports.rebootToRecovery = () => {
   return new Promise(
     (resolve, reject) => {
-      if (global.deviceID && global.connection === global.strings.adb) {
+      if (global.deviceID && (global.connection === global.strings.adb || global.connection === global.strings.recovery)) {
         this.execute('reboot recovery', data => {
+          resolve(data)
+        })
+      } else {
+        reject(global.strings.noDevice)
+      }
+    })
+}
+
+exports.rebootSystem = () => {
+  return new Promise(
+    (resolve, reject) => {
+      if (global.deviceID && (global.connection === global.strings.adb || global.connection === global.strings.recovery)) {
+        this.execute('reboot', data => {
           resolve(data)
         })
       } else {
@@ -220,7 +233,6 @@ exports.startFlashWlanCustom = () => {
           reject(error)
         })
       } else if (global.deviceID && global.connection === global.strings.fastboot) {
-        // Phone is Fastboot
         reject('Reboot device to recovery mode')
       } else if (global.deviceID && global.connection === global.strings.recovery) {
         this.pushWlanCustom().then(() => {
@@ -261,7 +273,6 @@ exports.startFlashSuperSU = () => {
           reject(error)
         })
       } else if (global.deviceID && global.connection === global.strings.fastboot) {
-        // Phone is Fastboot
         reject('Reboot device to recovery mode')
       } else if (global.deviceID && global.connection === global.strings.recovery) {
         this.pushSuperSU().then(() => {

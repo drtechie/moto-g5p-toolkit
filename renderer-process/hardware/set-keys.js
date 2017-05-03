@@ -20,7 +20,6 @@ ipc.on('set-sync-key', function (event, arg) {
   syncKey.value = arg
 })
 
-
 responseBtn.addEventListener('click', function (event) {
   event.preventDefault()
   let correctValue = responseCorrectKey.value

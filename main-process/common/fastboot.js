@@ -152,6 +152,32 @@ exports.waitForFastbootDevice = () => {
     })
 }
 
+exports.rebootToBootloader = () => {
+  return new Promise(
+    (resolve, reject) => {
+      if (global.deviceID && global.connection === global.strings.fastboot) {
+        this.execute('reboot-bootloader', data => {
+          resolve(data)
+        })
+      } else {
+        reject(global.strings.noDevice)
+      }
+    })
+}
+
+exports.rebootSystem = () => {
+  return new Promise(
+    (resolve, reject) => {
+      if (global.deviceID && global.connection === global.strings.fastboot) {
+        this.execute('reboot', data => {
+          resolve(data)
+        })
+      } else {
+        reject(global.strings.noDevice)
+      }
+    })
+}
+
 exports.startUnlockDataExtract = () => {
   return new Promise(
     (resolve, reject) => {
