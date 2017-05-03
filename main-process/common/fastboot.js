@@ -268,7 +268,7 @@ exports.flashBootImage = () => {
 exports.startFlashBootImage = () => {
   return new Promise(
     (resolve, reject) => {
-      if (global.deviceID && (global.connection === global.strings.adb || global.strings.recovery)) {
+      if (global.deviceID && (global.connection === global.strings.adb || global.connection === global.strings.recovery)) {
         // If the phone is in ADB mode, reboot!
         adbTools.rebootToBootloader().then(() => {
           this.waitForFastbootDevice().then(() => {

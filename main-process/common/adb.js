@@ -72,6 +72,9 @@ exports.checkMotoName = (deviceID, deviceType) => {
       if (deviceType === 'unauthorized') {
         statusTools.setDevice(deviceID, global.strings.adbUnauthorized)
         resolve(true)
+      } else if (_.includes(deviceType,'permissions')) {
+        statusTools.setDevice(deviceID, global.strings.adbNoPermissions)
+        resolve(true)
       } else if (deviceType === 'offline') {
         statusTools.setDevice(deviceID, global.strings.adbOffline)
         resolve(true)
@@ -95,7 +98,7 @@ exports.checkMotoName = (deviceID, deviceType) => {
 exports.rebootToBootloader = () => {
   return new Promise(
     (resolve, reject) => {
-      if (global.deviceID && (global.connection === global.strings.adb || global.strings.recovery)) {
+      if (global.deviceID && (global.connection === global.strings.adb || global.connection === global.strings.recovery)) {
         this.execute('reboot bootloader', data => {
           resolve(data)
         })
