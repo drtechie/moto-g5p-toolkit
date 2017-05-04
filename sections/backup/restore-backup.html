@@ -1,9 +1,9 @@
 <template class="task-template">
-  <section id="clipboard-section" class="section js-section u-category-system">
+  <section id="restore-backup-section" class="section js-section u-category-backup">
     <header class="section-header">
       <div class="section-wrapper">
         <h1>
-          <svg class="section-icon"><use xlink:href="assets/img/icons.svg#icon-system"></use></svg>
+          <svg class="section-icon"><use xlink:href="assets/img/icons.svg#icon-history"></use></svg>
           Clipboard
         </h1>
         <h3>The <code>clipboard</code> module provides methods to perform copy and paste operations.</h3>
@@ -25,7 +25,6 @@
           </div>
           <p>In this example we copy a phrase to the clipboard. After clicking 'Copy' use the text area to paste (CMD + V or CTRL + V) the phrase from the clipboard.</p>
           <h5>Renderer Process</h5>
-          <pre><code data-path="renderer-process/system/copy.js"></pre></code>
         </div>
       </div>
     </div>
@@ -43,14 +42,12 @@
           <p>In this example we copy a string to the clipboard and then paste the results into a message above.</p>
 
           <h5>Renderer Process</h5>
-          <pre><code data-path="renderer-process/system/paste.js"></pre></code>
         </div>
       </div>
     </div>
 
     <script type="text/javascript">
-      require('./renderer-process/system/copy')
-      require('./renderer-process/system/paste')
+      require('./renderer-process/backup/restore-backup')
     </script>
 
   </section>

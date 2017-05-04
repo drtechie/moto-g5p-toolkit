@@ -31,7 +31,7 @@ module.exports = {
           return;
         }
         else {
-          // reached file system root, let's stop
+          // reached file backup root, let's stop
           if(nextDirectory == directory) {
             return;
           }

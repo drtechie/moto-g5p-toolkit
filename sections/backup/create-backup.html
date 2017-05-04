@@ -1,0 +1,109 @@
+<template class="task-template">
+  <section id="create-backup-section" class="section js-section u-category-backup">
+    <header class="section-header">
+      <div class="section-wrapper">
+        <h1>
+          <svg class="section-icon"><use xlink:href="assets/img/icons.svg#icon-history"></use></svg>
+          Create Backup
+        </h1>
+        <h3>This module allows you to create a backup of the device.</h3>
+        <p>You can either do it the Android way or the Recovery (NANDroid) way.</p>
+      </div>
+    </header>
+
+    <div class="demo">
+      <div class="demo-wrapper">
+        <button id="android-backup-create-toggle" class="js-container-target demo-toggle-button">Android Backup
+          <div class="demo-meta u-avoid-clicks">Create backup via ADB </div>
+        </button>
+        <div class="demo-box">
+          <p>Click the button below to start backing up the device. You will be asked to specify a directory and name.</p>
+          <p><code>Enter the name without spaces</code></p>
+          <p>System app data and user app data with apk are backedup. Note that SD card content, system app apks and paid user app apks are not backedup.</p>
+          <div class="demo-controls">
+            <button class="demo-button" id="android-backup-create-button">Create Backup</button>
+            <span class="demo-response" id="android-backup-create-button-reply"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo">
+      <div class="demo-wrapper">
+        <button id="nandroid-backup-create-toggle" class="js-container-target demo-toggle-button">Recovery (NANDroid) Backup
+          <div class="demo-meta u-avoid-clicks">Create backup via TWRP Recovery </div>
+        </button>
+        <div class="demo-box">
+          <form class="ui form">
+            <div class="grouped fields">
+              <label>Backup destination</label>
+              <div class="field">
+                <div class="ui radio checkbox" id="backup-destination-computer">
+                  <input type="radio" value="phone" name="backup-option-destination">
+                  <label>Computer</label>
+                  <small><em>This a TWRP 3.1.0+ feature. The backup will be streamed
+                    to a destination you choose on your computer.</em></small>
+                </div>
+              </div>
+              <div class="field">
+                <div class="ui radio checkbox" id="backup-destination-phone">
+                  <input type="radio" value="computer" name="backup-option-destination" checked="checked">
+                  <label>Phone</label>
+                </div>
+              </div>
+            </div>
+          </form>
+          <form class="ui form">
+            <div class="grouped fields">
+              <label>Select partitions to backup</label>
+              <div class="field">
+                <div class="ui checkbox" id="backup-partition-system">
+                  <input type="checkbox" checked>
+                  <label>System</label>
+                </div>
+              </div>
+              <div class="field">
+                <div class="ui checkbox" id="backup-partition-data">
+                  <input type="checkbox" checked>
+                  <label>Data</label>
+                </div>
+              </div>
+              <div class="field">
+                <div class="ui checkbox" id="backup-partition-cache">
+                  <input type="checkbox">
+                  <label>Cache</label>
+                </div>
+              </div>
+              <div class="field">
+                <div class="ui checkbox" id="backup-partition-boot">
+                  <input type="checkbox" checked>
+                  <label>Boot</label>
+                </div>
+              </div>
+            </div>
+          </form>
+          <form class="ui form">
+            <div class="grouped fields">
+              <label>Others</label>
+              <div class="field">
+                <div class="ui checkbox" id="backup-option-compress">
+                  <input type="checkbox">
+                  <label>Compress</label>
+                </div>
+              </div>
+            </div>
+          </form>
+          <div class="demo-controls margin-top-10">
+            <button class="demo-button" id="nandroid-backup-create-button">Create Backup</button>
+            <span class="demo-response" id="nandroid-backup-create-button-reply"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+      require('./renderer-process/backup/create-backup')
+    </script>
+
+  </section>
+</template>

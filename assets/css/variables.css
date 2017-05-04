@@ -16,9 +16,21 @@
 
 /* Category Colors */
 
-.u-category-instructions       { --color-accent: hsl(116, 30%, 36%); }
-.u-category-bootloader          { --color-accent: hsl(194, 60%, 36%); }
-.u-category-recovery    { --color-accent: hsl(222, 53%, 50%); }
-.u-category-device { --color-accent: hsl(285, 47%, 46%); }
-.u-category-system        { --color-accent: hsl(330, 65%, 48%); }
-.u-category-media      { --color-accent: hsl( 36, 77%, 34%); }
+.u-category-instructions {
+  --color-accent: hsl(116, 30%, 36%);
+}
+.u-category-bootloader {
+  --color-accent: hsl(194, 60%, 36%);
+}
+.u-category-recovery {
+  --color-accent: hsl(222, 53%, 50%);
+}
+.u-category-device {
+  --color-accent: hsl(285, 47%, 46%);
+}
+.u-category-backup {
+  --color-accent: hsl(330, 65%, 48%);
+}
+.u-category-media {
+  --color-accent: hsl( 36, 77%, 34%);
+}

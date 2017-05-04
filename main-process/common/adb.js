@@ -1,6 +1,7 @@
 const { exec } = require('child_process')
 const _ = require('lodash')
 const files = require('./files')
+const fastbootTools = require('./fastboot')
 const statusTools = require('./status')
 const adb = files.getAdbPath()
 const { forEach } = require('async-foreach')
@@ -201,6 +202,30 @@ exports.waitForRecoveryDevice = () => {
           }).catch(() => {
             // do nothing
           })
+          if (count > 10) {
+            clearInterval(intervalObject)
+            reject(global.strings.noDevice)
+          }
+        }, 5000)
+      }
+    })
+}
+
+exports.waitForADBDevice = () => {
+  return new Promise(
+    (resolve, reject) => {
+      if (global.deviceID && global.connection === global.strings.adb) {
+        resolve(true)
+      } else {
+        let count
+        let intervalObject = setInterval(() => {
+          count++
+          this.getMoto().then(() => {
+            clearInterval(intervalObject)
+            resolve(true)
+          }).catch(() => {
+            // do nothing
+          })
           if (count > 5) {
             clearInterval(intervalObject)
             reject(global.strings.noDevice)
@@ -281,6 +306,161 @@ exports.startFlashSuperSU = () => {
           }).catch((error) => {
             reject(error)
           })
+        }).catch((error) => {
+          reject(error)
+        })
+      } else {
+        reject(global.strings.noDevice)
+      }
+    })
+}
+
+exports.doADBBackup = (filename) => {
+  return new Promise(
+    (resolve, reject) => {
+      if (global.deviceID && global.connection === global.strings.adb) {
+        this.execute('backup -all -apk -f ' + filename, () => {
+          resolve('Backup created')
+        })
+      } else {
+        reject('Backup creation failed.')
+      }
+    })
+}
+
+exports.createAndroidBackup = (filename) => {
+  return new Promise(
+    (resolve, reject) => {
+      if (global.deviceID && global.connection === global.strings.adb) {
+        this.doADBBackup(filename).then((data) => {
+          resolve(data)
+        }).catch((error) => {
+          reject(error)
+        })
+      } else if (global.deviceID && global.connection === global.strings.fastboot) {
+        fastbootTools.rebootSystem().then(() => {
+          this.waitForADBDevice().then(() => {
+            this.doADBBackup(filename).then((data) => {
+              resolve(data)
+            }).catch((error) => {
+              reject(error)
+            })
+          }).catch((error) => {
+            reject(error)
+          })
+        }).catch((error) => {
+          reject(error)
+        })
+      } else if (global.deviceID && global.connection === global.strings.recovery) {
+        this.rebootSystem().then(() => {
+          this.waitForADBDevice().then(() => {
+            this.doADBBackup(filename).then((data) => {
+              resolve(data)
+            }).catch((error) => {
+              reject(error)
+            })
+          }).catch((error) => {
+            reject(error)
+          })
+        }).catch((error) => {
+          reject(error)
+        })
+      } else {
+        reject(global.strings.noDevice)
+      }
+    })
+}
+
+exports.doTWRPBackup = (filename, arg) => {
+  return new Promise(
+    (resolve, reject) => {
+      if (global.deviceID && global.connection === global.strings.recovery) {
+        let command = ''
+        if (filename) {
+          command += 'backup --twrp -f '+ filename + ' '
+        } else {
+          command += 'shell twrp backup '
+        }
+        if (arg.system) {
+          switch(filename) {
+            case null:
+              command += 'S'
+              break;
+            default:
+              command += '--system '
+          }
+        }
+        if (arg.data) {
+          switch(filename) {
+            case null:
+              command += 'D'
+              break;
+            default:
+              command += '--data '
+          }
+        }
+        if (arg.cache) {
+          switch(filename) {
+            case null:
+              command += 'C'
+              break;
+            default:
+              command += '--cache '
+          }
+        }
+        if (arg.boot) {
+          switch(filename) {
+            case null:
+              command += 'B'
+              break;
+            default:
+              command += '--boot '
+          }
+        }
+        if (arg.compress) {
+          switch(filename) {
+            case null:
+              command += 'O'
+              break;
+            default:
+              command += '--compress '
+          }
+        }
+        this.execute(command, () => {
+          resolve('Backup created')
+        })
+      } else {
+        reject('Backup creation failed.')
+      }
+    })
+}
+
+exports.createNANDroidBackup = (filename, args) => {
+  return new Promise(
+    (resolve, reject) => {
+      if (!args.system && !args.data && !args.cache && !args.boot) {
+        reject('Select atleast one partition!')
+      }
+      else if (global.deviceID && global.connection === global.strings.adb) {
+        // If the phone is in ADB mode, reboot to recovery!
+        this.rebootToRecovery().then(() => {
+          this.waitForRecoveryDevice().then(() => {
+            this.doTWRPBackup(filename, args).then((data) => {
+              resolve(data)
+            }).catch((error) => {
+              reject(error)
+            })
+          }).catch((error) => {
+            reject(error)
+          })
+        }).catch((error) => {
+          reject(error)
+        })
+      } else if (global.deviceID && global.connection === global.strings.fastboot) {
+        reject('Reboot device to recovery mode')
+      } else if (global.deviceID && global.connection === global.strings.recovery) {
+        this.doTWRPBackup(filename, args).then((data) => {
+          resolve(data)
         }).catch((error) => {
           reject(error)
         })
