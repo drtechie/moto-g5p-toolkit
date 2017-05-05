@@ -14,7 +14,7 @@
     <div class="demo">
       <div class="demo-wrapper">
         <button id="android-backup-restore-toggle" class="js-container-target demo-toggle-button">Android Backup
-          <div class="demo-meta u-avoid-clicks">Restore backup via ADB </div>
+          <div class="demo-meta u-avoid-clicks">Restore backup via ADB</div>
         </button>
         <div class="demo-box">
           <p>Click the button below to start restoring backup to the device. You will be asked to specify the Android Backup file.</p>
@@ -36,47 +36,60 @@
             <button class="demo-button" id="nandroid-backup-check-button">Check Backups</button>
             <span class="demo-response" id="nandroid-backup-check-button-reply"></span>
           </div>
-          <small><em>Phone will be rebooted to Recovery to check current backups available.</em></small>
-          <div class="demo-controls margin-top-10">
-            <button class="demo-button" id="nandroid-backup-choose-button">Choose Backup from computer</button>
-            <span class="demo-response" id="nandroid-backup-choose-button-reply"></span>
-          </div>
-          <small><em>Choose a backup from your computer and phone will be rebooted to Recovery to flash the same.</em></small>
-
-          <form class="ui form">
-            <div class="grouped fields">
-              <label>Select partitions to restore</label>
-              <div class="field">
-                <div class="ui checkbox" id="backup-partition-system">
-                  <input type="checkbox" checked>
-                  <label>System</label>
-                </div>
-              </div>
-              <div class="field">
-                <div class="ui checkbox" id="backup-partition-data">
-                  <input type="checkbox" checked>
-                  <label>Data</label>
-                </div>
-              </div>
-              <div class="field">
-                <div class="ui checkbox" id="backup-partition-cache">
-                  <input type="checkbox">
-                  <label>Cache</label>
-                </div>
-              </div>
-              <div class="field">
-                <div class="ui checkbox" id="backup-partition-boot">
-                  <input type="checkbox" checked>
-                  <label>Boot</label>
+          <small><em>Check current backups available on phone.</em></small>
+          <form class="ui form hidden" id="nandroid-available-backups">
+            <div class="field">
+              <div class="ui selection dropdown" id="nandroid-backup-dropdown">
+                <input type="hidden" name="gender">
+                <i class="dropdown icon"></i>
+                <div class="default text">Select a backup</div>
+                <div class="menu" id="nandroid-backup-names">
                 </div>
               </div>
             </div>
           </form>
 
+          <form class="ui form hidden" id="available-partitions">
+            <input type="hidden" id="restore-nandroid-folder">
+            <div class="grouped fields">
+              <label>Select partitions to restore</label>
+              <div class="field">
+                <div class="ui disabled checkbox" id="restore-partition-system">
+                  <input type="checkbox">
+                  <label>System</label>
+                </div>
+              </div>
+              <div class="field">
+                <div class="ui disabled checkbox" id="restore-partition-data">
+                  <input type="checkbox">
+                  <label>Data</label>
+                </div>
+              </div>
+              <div class="field">
+                <div class="ui disabled checkbox" id="restore-partition-cache">
+                  <input type="checkbox">
+                  <label>Cache</label>
+                </div>
+              </div>
+              <div class="field">
+                <div class="ui disabled checkbox" id="restore-partition-boot">
+                  <input type="checkbox">
+                  <label>Boot</label>
+                </div>
+              </div>
+            </div>
+            <div class="demo-controls margin-top-10">
+              <button class="demo-button" id="nandroid-backup-restore-button">Restore Backup via TWRP</button>
+              <span class="demo-response" id="nandroid-backup-restore-button-reply"></span>
+            </div>
+          </form>
+
           <div class="demo-controls margin-top-10">
-            <button class="demo-button" id="nandroid-backup-restore-button">Restore Backup</button>
-            <span class="demo-response" id="nandroid-backup-restore-button-reply"></span>
+            <button class="demo-button" id="nandroid-backup-choose-button">Restore Backup from computer</button>
+            <span class="demo-response" id="nandroid-backup-choose-button-reply"></span>
           </div>
+          <small><em>Choose a backup from your computer and phone will be rebooted to Recovery to flash the same.</em></small>
+
         </div>
       </div>
     </div>

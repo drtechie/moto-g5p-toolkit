@@ -38,11 +38,11 @@ ipc.on('reboot-to-bootloader-fb', function (event, arg) {
   })
 })
 
-ipc.on('reboot-backup-fb', function (event, arg) {
-  event.sender.send('reboot-backup-fb-button-reply', 'Sending command via Fastboot')
+ipc.on('reboot-system-fb', function (event, arg) {
+  event.sender.send('reboot-system-fb-button-reply', 'Sending command via Fastboot')
   fastbootTools.rebootSystem().then((data) => {
-    event.sender.send('reboot-backup-fb-button-reply', data)
+    event.sender.send('reboot-system-fb-button-reply', data)
   }).catch((error) => {
-    event.sender.send('reboot-backup-fb-button-reply', error)
+    event.sender.send('reboot-system-fb-button-reply', error)
   })
 })

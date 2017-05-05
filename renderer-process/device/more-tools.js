@@ -4,7 +4,7 @@ const adbRebootBootloader = $('#reboot-to-bootloader-button')
 const adbRebootRecovery = $('#reboot-to-recovery-button')
 const adbReboot = $('#reboot-system-button')
 const fbRebootBootloader = $('#reboot-to-bootloader-fb-button')
-const fbReboot = $('#reboot-backup-fb-button')
+const fbReboot = $('#reboot-system-fb-button')
 
 adbRebootBootloader.on('click', function (event) {
   event.preventDefault()
@@ -40,8 +40,8 @@ ipc.on('reboot-to-bootloader-fb-button-reply', function (event, arg) {
 
 fbReboot.on('click', function (event) {
   event.preventDefault()
-  ipc.send('reboot-backup-fb', null)
+  ipc.send('reboot-system-fb', null)
 })
-ipc.on('reboot-backup-fb-button-reply', function (event, arg) {
-  document.getElementById('reboot-backup-fb-button-reply').innerHTML = arg
+ipc.on('reboot-system-fb-button-reply', function (event, arg) {
+  document.getElementById('reboot-system-fb-button-reply').innerHTML = arg
 })

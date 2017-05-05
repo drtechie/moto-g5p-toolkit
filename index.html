@@ -142,5 +142,18 @@
       divDeviceStatus.addClass(`${arg}`)
     })
   </script>
+  <script type="text/javascript">
+    $('#nandroid-backup-dropdown').dropdown({
+      onChange: function(val) {
+        $(this).addClass('loading')
+        $('#restore-partition-system').addClass('disabled').checkbox('uncheck').find('input').attr('disabled', true)
+        $('#restore-partition-data').addClass('disabled').checkbox('uncheck').find('input').attr('disabled', true)
+        $('#restore-partition-cache').addClass('disabled').checkbox('uncheck').find('input').attr('disabled', true)
+        $('#restore-partition-boot').addClass('disabled').checkbox('uncheck').find('input').attr('disabled', true)
+        $('#restore-nandroid-folder').val(val)
+        ipc.send('check-partitions', val)
+      }
+    });
+  </script>
 </body>
 </html>

@@ -469,3 +469,92 @@ exports.createNANDroidBackup = (filename, args) => {
       }
     })
 }
+
+exports.checkTWRPBackups = () => {
+  return new Promise(
+    (resolve, reject) => {
+      if (global.deviceID && (global.connection === global.strings.adb || global.connection === global.strings.recovery)) {
+        this.execute('shell ls /sdcard/TWRP/BACKUPS/' + global.deviceID + '/', (data) => {
+          resolve(data)
+        })
+      } else {
+        reject('Checking backups failed.')
+      }
+    })
+}
+
+exports.checkTWRPPartitions = (folder) => {
+  return new Promise(
+    (resolve, reject) => {
+      if (global.deviceID && (global.connection === global.strings.adb || global.connection === global.strings.recovery)) {
+        this.execute('shell ls /sdcard/TWRP/BACKUPS/' + global.deviceID + '/' + folder + '/', (data) => {
+          resolve(data)
+        })
+      } else {
+        reject('Checking backups failed.')
+      }
+    })
+}
+
+
+exports.doTWRPRestore = (arg) => {
+  return new Promise(
+    (resolve, reject) => {
+      if (global.deviceID && global.connection === global.strings.recovery) {
+        let command = 'shell twrp restore /sdcard/TWRP/BACKUPS/' + global.deviceID +'/' + arg.folder + ' '
+
+        if (arg.system) {
+          command += 'S'
+        }
+        if (arg.data) {
+          command += 'D'
+        }
+        if (arg.cache) {
+          command += 'C'
+        }
+        if (arg.boot) {
+          command += 'B'
+        }
+        this.execute(command, () => {
+          resolve('Restored')
+        })
+      } else {
+        reject('Restore failed.')
+      }
+    })
+}
+
+exports.restoreNANDroidBackup = (args) => {
+  return new Promise(
+    (resolve, reject) => {
+      if (!args.system && !args.data && !args.cache && !args.boot) {
+        reject('Select atleast one partition!')
+      }
+      else if (global.deviceID && global.connection === global.strings.adb) {
+        // If the phone is in ADB mode, reboot to recovery!
+        this.rebootToRecovery().then(() => {
+          this.waitForRecoveryDevice().then(() => {
+            this.doTWRPRestore(args).then((data) => {
+              resolve(data)
+            }).catch((error) => {
+              reject(error)
+            })
+          }).catch((error) => {
+            reject(error)
+          })
+        }).catch((error) => {
+          reject(error)
+        })
+      } else if (global.deviceID && global.connection === global.strings.fastboot) {
+        reject('Reboot device to recovery mode')
+      } else if (global.deviceID && global.connection === global.strings.recovery) {
+        this.doTWRPRestore(args).then((data) => {
+          resolve(data)
+        }).catch((error) => {
+          reject(error)
+        })
+      } else {
+        reject(global.strings.noDevice)
+      }
+    })
+}

@@ -32,6 +32,7 @@ exports.getPhones = () => {
           } else if (process.platform === 'win32') {
             devices = _.split(data, '\r\n')
           }
+
           devices.forEach((value) => {
             let tmp = value.split('\t')
             if (tmp.length === 2) {
@@ -55,13 +56,17 @@ exports.getMoto = () => {
       this.getPhones().then(devices => {
         if (devices.length > 0) {
           forEach(devices, (device) => {
-            this.checkMotoName(device.id).then(foundName => {
-              if (foundName) {
-                resolve(foundName)
-              }
-            }).catch(() => {
-              // do nothing
-            })
+            if (_.includes(device.id, 'permissions')) {
+              reject( global.strings.fastbootNoPermissions)
+            } else {
+              this.checkMotoName(device.id).then(foundName => {
+                if (foundName) {
+                  resolve(foundName)
+                }
+              }).catch(() => {
+                // do nothing
+              })
+            }
           })
         } else {
           reject(false)

@@ -35,8 +35,12 @@ exports.checkStatus = () => {
   }).catch(() => {
     fastbootTools.getMoto().then(() => {
       this.setStatus(global.deviceID, global.connection, 'yellow')
-    }).catch(() => {
-      this.setStatus(global.strings.noDevice, global.strings.noConnection, 'red')
+    }).catch((error) => {
+      if (error === global.strings.fastbootNoPermissions) {
+        this.setStatus('???????', global.strings.fastbootNoPermissions, 'red')
+      } else {
+        this.setStatus(global.strings.noDevice, global.strings.noConnection, 'red')
+      }
     })
   })
 }
