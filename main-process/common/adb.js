@@ -377,51 +377,51 @@ exports.doTWRPBackup = (filename, arg) => {
       if (global.deviceID && global.connection === global.strings.recovery) {
         let command = ''
         if (filename) {
-          command += 'backup --twrp -f '+ filename + ' '
+          command += 'backup --twrp -f ' + filename + ' '
         } else {
           command += 'shell twrp backup '
         }
         if (arg.system) {
-          switch(filename) {
+          switch (filename) {
             case null:
               command += 'S'
-              break;
+              break
             default:
               command += '--system '
           }
         }
         if (arg.data) {
-          switch(filename) {
+          switch (filename) {
             case null:
               command += 'D'
-              break;
+              break
             default:
               command += '--data '
           }
         }
         if (arg.cache) {
-          switch(filename) {
+          switch (filename) {
             case null:
               command += 'C'
-              break;
+              break
             default:
               command += '--cache '
           }
         }
         if (arg.boot) {
-          switch(filename) {
+          switch (filename) {
             case null:
               command += 'B'
-              break;
+              break
             default:
               command += '--boot '
           }
         }
         if (arg.compress) {
-          switch(filename) {
+          switch (filename) {
             case null:
               command += 'O'
-              break;
+              break
             default:
               command += '--compress '
           }
@@ -440,8 +440,7 @@ exports.createNANDroidBackup = (filename, args) => {
     (resolve, reject) => {
       if (!args.system && !args.data && !args.cache && !args.boot) {
         reject('Select atleast one partition!')
-      }
-      else if (global.deviceID && global.connection === global.strings.adb) {
+      } else if (global.deviceID && global.connection === global.strings.adb) {
         // If the phone is in ADB mode, reboot to recovery!
         this.rebootToRecovery().then(() => {
           this.waitForRecoveryDevice().then(() => {
@@ -496,12 +495,11 @@ exports.checkTWRPPartitions = (folder) => {
     })
 }
 
-
 exports.doTWRPRestore = (arg) => {
   return new Promise(
     (resolve, reject) => {
       if (global.deviceID && global.connection === global.strings.recovery) {
-        let command = 'shell twrp restore /sdcard/TWRP/BACKUPS/' + global.deviceID +'/' + arg.folder + ' '
+        let command = 'shell twrp restore /sdcard/TWRP/BACKUPS/' + global.deviceID + '/' + arg.folder + ' '
 
         if (arg.system) {
           command += 'S'
@@ -529,8 +527,7 @@ exports.restoreNANDroidBackup = (args) => {
     (resolve, reject) => {
       if (!args.system && !args.data && !args.cache && !args.boot) {
         reject('Select atleast one partition!')
-      }
-      else if (global.deviceID && global.connection === global.strings.adb) {
+      } else if (global.deviceID && global.connection === global.strings.adb) {
         // If the phone is in ADB mode, reboot to recovery!
         this.rebootToRecovery().then(() => {
           this.waitForRecoveryDevice().then(() => {
@@ -549,6 +546,52 @@ exports.restoreNANDroidBackup = (args) => {
         reject('Reboot device to recovery mode')
       } else if (global.deviceID && global.connection === global.strings.recovery) {
         this.doTWRPRestore(args).then((data) => {
+          resolve(data)
+        }).catch((error) => {
+          reject(error)
+        })
+      } else {
+        reject(global.strings.noDevice)
+      }
+    })
+}
+
+exports.doTWRPFileRestore = (fileName) => {
+  return new Promise(
+    (resolve, reject) => {
+      if (global.deviceID && global.connection === global.strings.recovery) {
+        let command = 'restore ' + fileName
+        this.execute(command, () => {
+          resolve('Restored')
+        })
+      } else {
+        reject('Restore failed.')
+      }
+    })
+}
+
+exports.restoreNANDroidBackupFromComputer = (fileName) => {
+  return new Promise(
+    (resolve, reject) => {
+      if (global.deviceID && global.connection === global.strings.adb) {
+        // If the phone is in ADB mode, reboot to recovery!
+        this.rebootToRecovery().then(() => {
+          this.waitForRecoveryDevice().then(() => {
+            this.doTWRPFileRestore(fileName).then((data) => {
+              resolve(data)
+            }).catch((error) => {
+              reject(error)
+            })
+          }).catch((error) => {
+            reject(error)
+          })
+        }).catch((error) => {
+          reject(error)
+        })
+      } else if (global.deviceID && global.connection === global.strings.fastboot) {
+        reject('Reboot device to recovery mode')
+      } else if (global.deviceID && global.connection === global.strings.recovery) {
+        this.doTWRPFileRestore(fileName).then((data) => {
           resolve(data)
         }).catch((error) => {
           reject(error)

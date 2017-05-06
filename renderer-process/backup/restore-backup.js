@@ -3,6 +3,7 @@ const $ = require('jquery')
 const restoreAndroidBackup = $('#android-backup-restore-button')
 const restoreNANDroidBackup = $('#nandroid-backup-restore-button')
 const checkNANDroidBackup = $('#nandroid-backup-check-button')
+const chooseNANDroidBackup = $('#nandroid-backup-choose-button')
 
 restoreAndroidBackup.on('click', function (event) {
   event.preventDefault()
@@ -16,12 +17,12 @@ ipc.on('android-backup-restore-button-reply', function (event, arg) {
 restoreNANDroidBackup.on('click', function (event) {
   event.preventDefault()
   let folder = $('#restore-nandroid-folder').val()
-  data = {
-    folder : folder,
-    system : $('#restore-partition-system').checkbox('is checked'),
-    boot : $('#restore-partition-boot').checkbox('is checked'),
-    data : $('#restore-partition-data').checkbox('is checked'),
-    cache : $('#restore-partition-cache').checkbox('is checked'),
+  let data = {
+    folder: folder,
+    system: $('#restore-partition-system').checkbox('is checked'),
+    boot: $('#restore-partition-boot').checkbox('is checked'),
+    data: $('#restore-partition-data').checkbox('is checked'),
+    cache: $('#restore-partition-cache').checkbox('is checked'),
   }
   ipc.send('restore-nandroid-backup', data)
 })
@@ -29,7 +30,6 @@ restoreNANDroidBackup.on('click', function (event) {
 ipc.on('nandroid-backup-restore-button-reply', function (event, arg) {
   $('#nandroid-backup-restore-button-reply').html(arg)
 })
-
 
 checkNANDroidBackup.on('click', function (event) {
   event.preventDefault()
@@ -39,7 +39,6 @@ checkNANDroidBackup.on('click', function (event) {
 ipc.on('nandroid-backup-check-button-reply', function (event, arg) {
   $('#nandroid-backup-check-button-reply').html(arg)
 })
-
 
 ipc.on('nandroid-backup-options', function (event, arg) {
   $('#nandroid-available-backups').removeClass('hidden')
@@ -70,4 +69,9 @@ ipc.on('nandroid-partitions-available', function (event, arg) {
       .removeClass('disabled').find('input')
       .attr('disabled', false)
   }
+})
+
+chooseNANDroidBackup.on('click', function (event) {
+  event.preventDefault()
+  ipc.send('choose-and-restore-nandroid-backup', null)
 })

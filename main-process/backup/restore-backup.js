@@ -38,12 +38,31 @@ ipc.on('check-partitions', function (event, arg) {
   })
 })
 
-
 ipc.on('restore-nandroid-backup', function (event, arg) {
   event.sender.send('nandroid-backup-restore-button-reply', 'Your device will be restored')
   adbTools.restoreNANDroidBackup(arg).then((data) => {
     event.sender.send('nandroid-backup-restore-button-reply', data)
   }).catch((error) => {
     event.sender.send('nandroid-backup-restore-button-reply', error)
+  })
+})
+
+ipc.on('choose-and-restore-nandroid-backup', function (event, arg) {
+  const options = {
+    title: 'Choose Android Backup',
+    filters: [
+      { name: 'Android Backup', extensions: ['ab'] }
+    ],
+    properties: ['openFile']
+  }
+  dialog.showOpenDialog(options, (fileName) => {
+    if (fileName) {
+      event.sender.send('nandroid-backup-choose-button-reply', 'Your device will be restored')
+      adbTools.restoreNANDroidBackupFromComputer(fileName).then((data) => {
+        event.sender.send('nandroid-backup-choose-button-reply', data)
+      }).catch((error) => {
+        event.sender.send('nandroid-backup-choose-button-reply', error)
+      })
+    }
   })
 })
