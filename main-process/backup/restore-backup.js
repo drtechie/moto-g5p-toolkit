@@ -66,3 +66,23 @@ ipc.on('choose-and-restore-nandroid-backup', function (event, arg) {
     }
   })
 })
+
+ipc.on('restore-android-backup', function (event, arg) {
+  const options = {
+    title: 'Choose Android Backup',
+    filters: [
+      { name: 'Android Backup', extensions: ['ab'] }
+    ],
+    properties: ['openFile']
+  }
+  dialog.showOpenDialog(options, (fileName) => {
+    if (fileName) {
+      event.sender.send('android-backup-restore-button-reply', 'Your device will be restored')
+      adbTools.restoreAndroidBackupFromComputer(fileName).then((data) => {
+        event.sender.send('android-backup-restore-button-reply', data)
+      }).catch((error) => {
+        event.sender.send('android-backup-restore-button-reply', error)
+      })
+    }
+  })
+})

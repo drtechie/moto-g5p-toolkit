@@ -48,7 +48,7 @@ exports.checkStatus = () => {
 /**
  *  Detect USB attach and detach events.
  *  Check whether a Moto is connected.
- *  Try 5 times because cancellng
+ *  Try 5 times because cancelling
  * */
 exports.listenUSB = () => {
   usb.on('attach', () => {

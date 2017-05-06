@@ -11,3 +11,6 @@ Thumbs.db
 
 node_modules
 /.sass-cache
+
+#Ignore packaged files
+/out

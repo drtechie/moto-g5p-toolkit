@@ -601,3 +601,60 @@ exports.restoreNANDroidBackupFromComputer = (fileName) => {
       }
     })
 }
+
+exports.doTWRPFileRestoreFromComputer = (fileName) => {
+  return new Promise(
+    (resolve, reject) => {
+      if (global.deviceID && global.connection === global.strings.adb) {
+        let command = 'restore ' + fileName
+        this.execute(command, () => {
+          resolve('Restored')
+        })
+      } else {
+        reject('Restore failed.')
+      }
+    })
+}
+
+exports.restoreAndroidBackupFromComputer = (fileName) => {
+  return new Promise(
+    (resolve, reject) => {
+      if (global.deviceID && global.connection === global.strings.adb) {
+        this.doTWRPFileRestoreFromComputer(fileName).then((data) => {
+          resolve(data)
+        }).catch((error) => {
+          reject(error)
+        })
+      } else if (global.deviceID && global.connection === global.strings.fastboot) {
+        this.rebootSystem().then(() => {
+          this.waitForADBDevice().then(() => {
+            this.doTWRPFileRestore(fileName).then((data) => {
+              resolve(data)
+            }).catch((error) => {
+              reject(error)
+            })
+          }).catch((error) => {
+            reject(error)
+          })
+        }).catch((error) => {
+          reject(error)
+        })
+      } else if (global.deviceID && global.connection === global.strings.recovery) {
+        this.rebootSystem().then(() => {
+          this.waitForADBDevice().then(() => {
+            this.doTWRPFileRestore(fileName).then((data) => {
+              resolve(data)
+            }).catch((error) => {
+              reject(error)
+            })
+          }).catch((error) => {
+            reject(error)
+          })
+        }).catch((error) => {
+          reject(error)
+        })
+      } else {
+        reject(global.strings.noDevice)
+      }
+    })
+}

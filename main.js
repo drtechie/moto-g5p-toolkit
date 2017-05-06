@@ -32,7 +32,6 @@ function initialize () {
   if (shouldQuit) return app.quit()
 
   loadMainJS()
-  loadDBs()
   function createWindow () {
     var windowOptions = {
       width: 1080,
@@ -99,12 +98,6 @@ function loadMainJS () {
     require(file)
   })
   autoUpdater.updateMenu()
-}
-
-function loadDBs () {
-  const dbPath = path.join(__dirname, '/database/settings.db')
-  const Datastore = require('nedb')
-  global.db.settings = new Datastore({ filename: dbPath, autoload: true })
 }
 
 // Handle Squirrel on Windows startup events
