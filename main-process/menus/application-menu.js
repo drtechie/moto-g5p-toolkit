@@ -53,14 +53,14 @@ let template = [{
   }, {
     type: 'separator'
   }, {
-    label: 'App Menu Demo',
+    label: 'App Menu Toolkit',
     click: function (item, focusedWindow) {
       if (focusedWindow) {
         const options = {
           type: 'info',
-          title: 'Application Menu Demo',
+          title: 'Application Menu Toolkit',
           buttons: ['Ok'],
-          message: 'This demo is for the Menu section, showing how to create a clickable menu item in the application menu.'
+          message: 'This toolkit is for the Menu section, showing how to create a clickable menu item in the application menu.'
         }
         electron.dialog.showMessageBox(focusedWindow, options, function () {})
       }

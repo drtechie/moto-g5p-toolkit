@@ -1,18 +1,18 @@
-/* Demo */
+/* Toolkit */
 
-.demo:first-of-type {
+.toolkit:first-of-type {
   margin-top: 2rem;
 }
-.demo:last-of-type {
+.toolkit:last-of-type {
   margin-bottom: 2rem;
 }
 @media (min-width: 940px) {
-  .demo:last-of-type {
+  .toolkit:last-of-type {
     margin-bottom: 4rem;
   }
 }
 
-.demo-wrapper {
+.toolkit-wrapper {
   position: relative;
   max-width: 740px;
   margin: 0 auto;
@@ -22,7 +22,7 @@
 
 /* Toggle Button ----------------------------- */
 
-.demo-toggle-button {
+.toolkit-toggle-button {
   position: relative;
   display: block;
   margin: 0;
@@ -39,8 +39,8 @@
   outline: none;
 }
 
-.demo-toggle-button:before,
-.demo-toggle-button:after {
+.toolkit-toggle-button:before,
+.toolkit-toggle-button:after {
   content: "";
   position: absolute;
   left: 0;
@@ -49,42 +49,42 @@
   background-color: hsl(0,0%,88%);
   transition: transform .2s cubic-bezier(.4,.1,0,1);
 }
-.demo-toggle-button:before {
+.toolkit-toggle-button:before {
   top: 0;
   transform-origin: bottom center;
   transform: translateX(.7em) rotate(-30deg) scale(.75);
 }
-.demo-toggle-button:after {
+.toolkit-toggle-button:after {
   bottom: 0;
   transform-origin: top center;
   transform: translateX(.7em) rotate(30deg) scale(.75);
 }
-.is-open .demo-toggle-button:before,
-.is-open .demo-toggle-button:after {
+.is-open .toolkit-toggle-button:before,
+.is-open .toolkit-toggle-button:after {
   transform: rotate(0deg);
 }
-.demo-toggle-button:focus:before,
-.demo-toggle-button:focus:after {
+.toolkit-toggle-button:focus:before,
+.toolkit-toggle-button:focus:after {
   background-color: currentColor;
 }
 
 /* Meta info */
 
-.demo-meta {
+.toolkit-meta {
   margin-top: .2em;
   font-size: 11px;
   font-weight: 300;
   text-transform: uppercase;
   color: var(--color-subtle);
 }
-.demo-meta-divider {
+.toolkit-meta-divider {
   margin: 0 .5em;
 }
 
 
-/* Demo Box ----------------------------- */
+/* Toolkit Box ----------------------------- */
 
-.demo-box {
+.toolkit-box {
   display: none;
   position: relative;
   padding: 2em;
@@ -94,7 +94,7 @@
   border: 1px solid var(--color-border);
   background-color: var(--color-bg);
 }
-.demo-box:before {
+.toolkit-box:before {
   content: "";
   position: absolute;
   top: -11px;
@@ -107,33 +107,33 @@
   transform: rotate(-45deg);
 }
 
-.is-open .demo-box {
+.is-open .toolkit-box {
   display: block;
-  animation: demo-box-fade-in .2s cubic-bezier(0, .20, .20, .96);
+  animation: toolkit-box-fade-in .2s cubic-bezier(0, .20, .20, .96);
 }
-@keyframes demo-box-fade-in {
+@keyframes toolkit-box-fade-in {
     0% { opacity: 0; transform: translateY(-20px); }
   100% { opacity: 1; transform: translateY(0); }
 }
 
-.demo-box > p:first-child {
+.toolkit-box > p:first-child {
   margin-top: 0;
 }
 
-.demo-box h5 {
+.toolkit-box h5 {
   font-size: 1em;
   margin-bottom: .6em;
 }
 
 
-/* Demo Controls ----------------------------- */
+/* Toolkit Controls ----------------------------- */
 
-.demo-controls {
+.toolkit-controls {
   display: flex;
   align-items: center;
 }
 
-.demo-button {
+.toolkit-button {
   align-self: flex-start;
   margin-right: 1em;
   border: 2px solid;
@@ -144,11 +144,11 @@
   color: inherit;
   background-color: transparent;
 }
-.demo-button:focus {
+.toolkit-button:focus {
   outline: none;
   background-color: white;
 }
-.demo-button:active {
+.toolkit-button:active {
   border-color: var(--color-border);
 }
 /*Override form elements focus border color*/
@@ -167,7 +167,7 @@
 .ui.selection.dropdown:focus {
   border-color: var(--color-accent) !important;
 }
-.demo-input {
+.toolkit-input {
   flex: 1;
   border: 2px solid var(--color-border);
   border-radius: 4px;
@@ -177,13 +177,13 @@
   color: inherit;
   background-color: transparent;
 }
-.demo-input:focus {
+.toolkit-input:focus {
   outline: none;
   border-color: hsl(0,0%,80%);
   background-color: white;
 }
 
-.demo-response {
+.toolkit-response {
   flex: 1;
   word-break: break-word;
 }
@@ -191,17 +191,17 @@
 
 /* ProTip ----------------------------- */
 
-.demo-protip {
+.toolkit-protip {
   margin-top: 2rem;
   padding: 1.5rem 2rem 2rem 2rem;
   border: 1px solid hsla(0,0%,0%,.06);
   border-radius: 6px;
   background: var(--color-accent) linear-gradient(hsla(0,0%,100%,.85), hsla(0,0%,100%,.85));
 }
-.demo-protip h2 {
+.toolkit-protip h2 {
   margin: 0 0 .5rem 0;
 }
-.demo-protip strong {
+.toolkit-protip strong {
   font-weight: 600;
 }
 

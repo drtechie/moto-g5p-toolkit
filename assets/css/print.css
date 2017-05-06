@@ -10,12 +10,12 @@
     font-size: 22px;
   }
 
-  .nav, button, .demo-box:before,
+  .nav, button, .toolkit-box:before,
   #pdf-path, header p {
     display: none;
   }
 
-  .demo-box, h2,
+  .toolkit-box, h2,
   pre, code {
     padding: 0 !important;
     margin: 0 !important;
