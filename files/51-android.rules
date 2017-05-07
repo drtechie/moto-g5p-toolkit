@@ -1,0 +1,5 @@
+# ADB
+SUBSYSTEM=="usb", ATTRS{idVendor}=="18d1", ATTRS{idProduct}=="4ee7", MODE="0666"
+
+# Fastboot
+SUBSYSTEM=="usb", ATTRS{idVendor}=="22b8", ATTRS{idProduct}=="2e80", MODE="0666"

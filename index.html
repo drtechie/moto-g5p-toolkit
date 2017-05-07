@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Moto G5 Plus Toolkit</title>
+  <title>drtechie's Moto G5 Plus Toolkit</title>
 
   <link rel="stylesheet" href="assets/css/variables.css">
   <link rel="stylesheet" href="assets/css/nativize.css">
@@ -26,8 +26,7 @@
   <link rel="import" href="sections/device/install-drivers.html">
   <link rel="import" href="sections/backup/create-backup.html">
   <link rel="import" href="sections/backup/restore-backup.html">
-  <link rel="import" href="sections/media/pdf.html">
-  <link rel="import" href="sections/media/desktop-capturer.html">
+  <link rel="import" href="sections/credits/credits.html">
 </head>
 <body>
 
@@ -44,10 +43,10 @@
 
     <div class="nav-item u-category-instructions">
       <h5 class="nav-category">
-        <svg class="nav-icon"><use xlink:href="assets/img/icons.svg#icon-file"></use></svg>
+        <svg class="nav-icon"><use xlink:href="assets/img/icons.svg#icon-list"></use></svg>
         Instruction
       </h5>
-      <button type="button" id="button-detailed" data-section="detailed" class="nav-button">Get detailed <em>instructions</em></button>
+      <button type="button" id="button-detailed" data-section="detailed" class="nav-button">How to use the <em>toolkit</em></button>
     </div>
 
     <div class="nav-item u-category-bootloader">
@@ -62,7 +61,7 @@
     <div class="nav-item u-category-recovery">
       <h5 class="nav-category">
         <svg class="nav-icon"><use xlink:href="assets/img/icons.svg#icon-flash"></use></svg>
-        Recovery
+        Flashing &amp; Recovery
       </h5>
       <button type="button" id="button-flash-twrp" data-section="flash-twrp" class="nav-button">Flash <em>TWRP</em> recovery</button>
       <button type="button" id="button-flash-boot-image" data-section="flash-boot-image" class="nav-button">Flash <em>boot_image</em></button>
@@ -87,19 +86,18 @@
       <button type="button" id="button-restore-backup" data-section="restore-backup" class="nav-button">Restore <em>backup</em></button>
     </div>
 
-    <div class="nav-item u-category-media">
+    <div class="nav-item u-category-credits">
       <h5 class="nav-category">
-        <svg class="nav-icon"><use xlink:href="assets/img/icons.svg#icon-file"></use></svg>
-        Export
+        <svg class="nav-icon"><use xlink:href="assets/img/icons.svg#icon-star"></use></svg>
+        Credits
       </h5>
-      <button type="button" id="button-pdf" data-section="pdf" class="nav-button"><em>Print</em> to PDF</button>
-      <button type="button" id="button-desktop-capturer" data-section="desktop-capturer" class="nav-button">Take a <em>screenshot</em></button>
+      <button type="button" id="button-credits" data-section="credits" class="nav-button">Thank you <em> devs! </em></button>
     </div>
 
     <footer class="nav-footer">
       <button type="button" id="button-about" data-modal="about" class="nav-footer-button">About</button>
-      <a class="nav-footer-logo" href="https://github.com">
-        <svg class="nav-footer-icon"><use xlink:href="assets/img/icons.svg#icon-love"></use></svg>
+      <a class="nav-footer-logo" href="https://forum.xda-developers.com/member.php?u=4968033">
+        <svg class="nav-footer-icon"><use xlink:href="assets/img/icons.svg#icon-code"></use></svg> by drtechie </a>
       </a>
     </footer>
   </nav>
