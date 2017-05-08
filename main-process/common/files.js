@@ -48,6 +48,6 @@ exports.replaceSpaces = (path) => {
   if (process.platform === 'linux' || process.platform === 'darwin') {
     return path.replace(/ /g, '\\ ')
   } else if (process.platform === 'win32') {
-    return path
+    return '"' + path + '"'
   }
 }
