@@ -17,17 +17,16 @@ createNANDroidBackup.on('click', function (event) {
   let destination
   if ($('#backup-destination-phone').checkbox('is checked')) {
     destination = 'phone'
-  }
-  else if ($('#backup-destination-computer').checkbox('is checked')) {
+  } else if ($('#backup-destination-computer').checkbox('is checked')) {
     destination = 'computer'
   }
-  data = {
-    destination : destination,
-    system : $('#backup-partition-system').checkbox('is checked'),
-    boot : $('#backup-partition-boot').checkbox('is checked'),
-    data : $('#backup-partition-data').checkbox('is checked'),
-    cache : $('#backup-partition-cache').checkbox('is checked'),
-    compress : $('#backup-option-compress').checkbox('is checked'),
+  let data = {
+    destination: destination,
+    system: $('#backup-partition-system').checkbox('is checked'),
+    boot: $('#backup-partition-boot').checkbox('is checked'),
+    data: $('#backup-partition-data').checkbox('is checked'),
+    cache: $('#backup-partition-cache').checkbox('is checked'),
+    compress: $('#backup-option-compress').checkbox('is checked')
   }
   ipc.send('create-nandroid-backup', data)
 })

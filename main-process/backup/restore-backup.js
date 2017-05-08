@@ -33,7 +33,7 @@ ipc.on('check-partitions', function (event, arg) {
       cache: _.includes(data, 'cache')
     }
     event.sender.send('nandroid-partitions-available', partitions)
-  }).catch((error) => {
+  }).catch(() => {
     //
   })
 })

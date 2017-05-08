@@ -22,7 +22,7 @@ restoreNANDroidBackup.on('click', function (event) {
     system: $('#restore-partition-system').checkbox('is checked'),
     boot: $('#restore-partition-boot').checkbox('is checked'),
     data: $('#restore-partition-data').checkbox('is checked'),
-    cache: $('#restore-partition-cache').checkbox('is checked'),
+    cache: $('#restore-partition-cache').checkbox('is checked')
   }
   ipc.send('restore-nandroid-backup', data)
 })

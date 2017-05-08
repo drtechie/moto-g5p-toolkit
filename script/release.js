@@ -6,16 +6,14 @@ const path = require('path')
 const request = require('request')
 const util = require('util')
 
-const token = process.env.ELECTRON_API_DEMO_GITHUB_TOKEN
+const token = process.env.MOTO_TOOLKIT_GITHUB_TOKEN
 const version = require('../package').version
 
 checkToken()
-  .then(checkHerokuLoginStatus)
   .then(zipAssets)
   .then(createRelease)
   .then(uploadAssets)
   .then(publishRelease)
-  .then(deployToHeroku)
   .catch((error) => {
     console.error(error.message || error)
     process.exit(1)
@@ -23,24 +21,10 @@ checkToken()
 
 function checkToken () {
   if (!token) {
-    return Promise.reject('ELECTRON_API_DEMO_GITHUB_TOKEN environment variable not set\nSet it to a token with repo scope created from https://github.com/settings/tokens/new')
+    return Promise.reject('MOTO_TOOLKIT_GITHUB_TOKEN environment variable not set\nSet it to a token with repo scope created from https://github.com/settings/tokens/new')
   } else {
     return Promise.resolve(token)
   }
-}
-
-function checkHerokuLoginStatus () {
-  return new Promise((resolve, reject) => {
-    console.log('Checking Heroku login status')
-
-    childProcess.exec('heroku whoami', (error, stdout, stderr) => {
-      if (error) {
-        reject('You are not logged in to GitHub\'s Heroku Enterprise account. To log in, run this command:\n$ heroku login --sso')
-      } else {
-        resolve()
-      }
-    })
-  })
 }
 
 function zipAsset (asset) {
@@ -70,33 +54,24 @@ function zipAssets () {
   const outPath = path.join(__dirname, '..', 'out')
 
   const zipAssets = [{
-    name: 'electron-api-demos-mac.zip',
-    path: path.join(outPath, 'Electron API Demos-darwin-x64', 'Electron API Demos.app')
+    name: 'moto-g5p-toolkit-mac.zip',
+    path: path.join(outPath, 'Moto G5+ Toolkit-darwin-x64', 'Electron API Demos.app')
   }, {
-    name: 'electron-api-demos-windows.zip',
-    path: path.join(outPath, 'ElectronAPIDemos-win32-ia32')
+    name: 'moto-g5p-toolkit-windows.zip',
+    path: path.join(outPath, 'Moto G5+ Toolkit-win32-ia32')
   }, {
-    name: 'electron-api-demos-linux.zip',
-    path: path.join(outPath, 'Electron API Demos-linux-x64')
+    name: 'moto-g5p-toolkit-linux.zip',
+    path: path.join(outPath, 'Moto G5+ Toolkit-linux-x64')
   }]
 
   return Promise.all(zipAssets.map(zipAsset)).then((zipAssets) => {
-    return zipAssets.concat([{
-      name: 'RELEASES',
-      path: path.join(outPath, 'windows-installer', 'RELEASES')
-    }, {
-      name: 'ElectronAPIDemosSetup.exe',
-      path: path.join(outPath, 'windows-installer', 'ElectronAPIDemosSetup.exe')
-    }, {
-      name: `ElectronAPIDemos-${version}-full.nupkg`,
-      path: path.join(outPath, 'windows-installer', `ElectronAPIDemos-${version}-full.nupkg`)
-    }])
+    return zipAssets
   })
 }
 
 function createRelease (assets) {
   const options = {
-    uri: 'https://api.github.com/repos/electron/electron-api-demos/releases',
+    uri: 'https://api.github.com/repos/drtechie/moto-g5p-toolkit/releases',
     headers: {
       Authorization: `token ${token}`,
       'User-Agent': `node/${process.versions.node}`
@@ -185,28 +160,6 @@ function publishRelease (release) {
       }
 
       resolve(body)
-    })
-  })
-}
-
-function deployToHeroku () {
-  return new Promise((resolve, reject) => {
-    console.log('Deploying to heroku')
-
-    const herokuCommand = [
-      'heroku',
-      'config:set',
-      '-a',
-      'github-electron-api-demos',
-      `ELECTRON_LATEST_RELEASE=${version}`
-    ].join(' ')
-
-    childProcess.exec(herokuCommand, (error) => {
-      if (error) {
-        reject(error)
-      } else {
-        resolve()
-      }
     })
   })
 }

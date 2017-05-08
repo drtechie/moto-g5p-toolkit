@@ -79,3 +79,13 @@ function hideAllSectionsAndDeselectButtons () {
 function displayAbout () {
   document.querySelector('#about-modal').classList.add('is-shown')
 }
+
+document.getElementById('show-credits').addEventListener('click', function (e) {
+  e.preventDefault()
+  hideAllModals()
+  activateCreditsSection()
+})
+
+function activateCreditsSection () {
+  document.getElementById('button-credits').click()
+}

@@ -107,7 +107,15 @@
   text-align: center;
 }
 
+.nav-footer-icon-wrapper, .nav-footer-author {
+  position: relative;
+  display: inline-block;
+}
+
 .nav-footer-icon {
+  position: absolute;
+  top: -12px;
+  left: -18px;
   width: calc(120px / 6.5);
   height: calc(88px / 6.5);
 }

@@ -57,7 +57,7 @@ exports.getMoto = () => {
         if (devices.length > 0) {
           forEach(devices, (device) => {
             if (_.includes(device.id, 'permissions')) {
-              reject( global.strings.fastbootNoPermissions)
+              reject(global.strings.fastbootNoPermissions)
             } else {
               this.checkMotoName(device.id).then(foundName => {
                 if (foundName) {
