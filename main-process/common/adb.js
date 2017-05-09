@@ -1,4 +1,4 @@
-const { exec } = require('child_process')
+const { exec, execFile } = require('child_process')
 const _ = require('lodash')
 const files = require('./files')
 const fastbootTools = require('./fastboot')
@@ -8,7 +8,7 @@ const { forEach } = require('async-foreach')
 
 exports.execute = (args, callback) => {
   let cmd = adb + ' ' + args
-  exec(cmd, (error, stdout, stderr) => {
+  execFile(adb, args, (error, stdout, stderr) => {
     if (error) console.log(error)
     if (stderr) {
       callback(stderr)
@@ -24,7 +24,7 @@ exports.execute = (args, callback) => {
 exports.getPhones = () => {
   return new Promise(
     (resolve) => {
-      this.execute('devices', data => {
+      this.execute(['devices'], data => {
         let deviceArray = []
         let devices
         if (process.platform === 'linux' || process.platform === 'darwin') {
@@ -83,7 +83,7 @@ exports.checkMotoName = (deviceID, deviceType) => {
         statusTools.setDevice(deviceID, global.strings.recovery)
         resolve(true)
       } else {
-        this.execute('-s ' + deviceID + ' shell getprop ro.hw.device', name => {
+        this.execute(['-s', deviceID, 'shell', 'getprop', 'ro.hw.device'], name => {
           if (_.includes(name, global.strings.deviceName)) {
             statusTools.setDevice(deviceID, global.strings.adb)
             resolve(true)
@@ -100,7 +100,7 @@ exports.rebootToBootloader = () => {
   return new Promise(
     (resolve, reject) => {
       if (global.deviceID && (global.connection === global.strings.adb || global.connection === global.strings.recovery)) {
-        this.execute('reboot bootloader', data => {
+        this.execute(['reboot', 'bootloader'], data => {
           resolve(data)
         })
       } else {
@@ -113,7 +113,7 @@ exports.rebootToRecovery = () => {
   return new Promise(
     (resolve, reject) => {
       if (global.deviceID && (global.connection === global.strings.adb || global.connection === global.strings.recovery)) {
-        this.execute('reboot recovery', data => {
+        this.execute(['reboot', 'recovery'], data => {
           resolve(data)
         })
       } else {
@@ -126,7 +126,7 @@ exports.rebootSystem = () => {
   return new Promise(
     (resolve, reject) => {
       if (global.deviceID && (global.connection === global.strings.adb || global.connection === global.strings.recovery)) {
-        this.execute('reboot', data => {
+        this.execute(['reboot'], data => {
           resolve(data)
         })
       } else {
@@ -139,7 +139,7 @@ exports.flashWlanCustom = () => {
   return new Promise(
     (resolve, reject) => {
       if (global.deviceID && global.connection === global.strings.recovery) {
-        this.execute('shell twrp install /sdcard/wlan_custom.zip', (data) => {
+        this.execute(['shell', 'twrp', 'install', '/sdcard/wlan_custom.zip'], () => {
           resolve('Installed zip')
         })
       } else {
@@ -152,7 +152,7 @@ exports.pushWlanCustom = () => {
   return new Promise(
     (resolve, reject) => {
       if (global.deviceID && global.connection === global.strings.recovery) {
-        this.execute('push ' + files.getWlanCustom() + ' /sdcard/', () => {
+        this.execute(['push', files.getWlanCustom(), '/sdcard/'], () => {
           resolve('File Pushed')
         })
       } else {
@@ -165,7 +165,7 @@ exports.flashSuperSU = () => {
   return new Promise(
     (resolve, reject) => {
       if (global.deviceID && global.connection === global.strings.recovery) {
-        this.execute('shell twrp install /sdcard/SR3-SuperSU-v2.79-SR3-20170114223742.zip', (data) => {
+        this.execute(['shell', 'twrp', 'install', '/sdcard/SR3-SuperSU-v2.79-SR3-20170114223742.zip'], () => {
           resolve('Installed zip')
         })
       } else {
@@ -178,7 +178,7 @@ exports.pushSuperSU = () => {
   return new Promise(
     (resolve, reject) => {
       if (global.deviceID && global.connection === global.strings.recovery) {
-        this.execute('push ' + files.getSuperSU() + ' /sdcard/', () => {
+        this.execute(['push', files.getSuperSU(), '/sdcard/'], () => {
           resolve('File Pushed')
         })
       } else {
@@ -319,7 +319,7 @@ exports.doADBBackup = (filename) => {
   return new Promise(
     (resolve, reject) => {
       if (global.deviceID && global.connection === global.strings.adb) {
-        this.execute('backup -all -apk -f ' + filename, () => {
+        this.execute(['backup', '-all', '-apk', '-f', filename], () => {
           resolve('Backup created')
         })
       } else {
