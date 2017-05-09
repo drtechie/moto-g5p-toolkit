@@ -1,4 +1,4 @@
-const { exec, execFile } = require('child_process')
+const { execFile } = require('child_process')
 const _ = require('lodash')
 const files = require('./files')
 const fastbootTools = require('./fastboot')
@@ -7,7 +7,6 @@ const adb = files.getAdbPath()
 const { forEach } = require('async-foreach')
 
 exports.execute = (args, callback) => {
-  let cmd = adb + ' ' + args
   execFile(adb, args, (error, stdout, stderr) => {
     if (error) console.log(error)
     if (stderr) {
@@ -195,15 +194,23 @@ exports.waitForRecoveryDevice = () => {
       } else {
         let count
         let intervalObject = setInterval(() => {
+          statusTools.setDevice(global.strings.waiting, global.strings.waitingRecovery)
+          statusTools.setStatus('purple')
           count++
           this.getMoto().then(() => {
-            clearInterval(intervalObject)
-            resolve(true)
+            if (global.deviceID && global.connection === global.strings.recovery) {
+              statusTools.setDevice(global.deviceID, global.connection)
+              statusTools.setStatus('orange')
+              clearInterval(intervalObject)
+              resolve(true)
+            }
           }).catch(() => {
             // do nothing
           })
           if (count > 10) {
             clearInterval(intervalObject)
+            statusTools.setDevice(global.strings.noDevice, global.strings.noConnection)
+            statusTools.setStatus('red')
             reject(global.strings.noDevice)
           }
         }, 5000)
@@ -219,15 +226,23 @@ exports.waitForADBDevice = () => {
       } else {
         let count
         let intervalObject = setInterval(() => {
+          statusTools.setDevice(global.strings.waiting, global.strings.waitingAdb)
+          statusTools.setStatus('purple')
           count++
           this.getMoto().then(() => {
-            clearInterval(intervalObject)
-            resolve(true)
+            if (global.deviceID && global.connection === global.strings.adb) {
+              statusTools.setDevice(global.deviceID, global.connection)
+              statusTools.setStatus('green')
+              clearInterval(intervalObject)
+              resolve(true)
+            }
           }).catch(() => {
             // do nothing
           })
           if (count > 5) {
             clearInterval(intervalObject)
+            statusTools.setDevice(global.strings.noDevice, global.strings.noConnection)
+            statusTools.setStatus('red')
             reject(global.strings.noDevice)
           }
         }, 5000)
@@ -426,7 +441,7 @@ exports.doTWRPBackup = (filename, arg) => {
               command += '--compress '
           }
         }
-        this.execute(command, () => {
+        this.execute(command.split(' '), () => {
           resolve('Backup created')
         })
       } else {
@@ -473,7 +488,7 @@ exports.checkTWRPBackups = () => {
   return new Promise(
     (resolve, reject) => {
       if (global.deviceID && (global.connection === global.strings.adb || global.connection === global.strings.recovery)) {
-        this.execute('shell ls /sdcard/TWRP/BACKUPS/' + global.deviceID + '/', (data) => {
+        this.execute(['shell', 'ls', '/sdcard/TWRP/BACKUPS/' + global.deviceID + '/'], (data) => {
           resolve(data)
         })
       } else {
@@ -486,7 +501,7 @@ exports.checkTWRPPartitions = (folder) => {
   return new Promise(
     (resolve, reject) => {
       if (global.deviceID && (global.connection === global.strings.adb || global.connection === global.strings.recovery)) {
-        this.execute('shell ls /sdcard/TWRP/BACKUPS/' + global.deviceID + '/' + folder + '/', (data) => {
+        this.execute(['shell', 'ls', '/sdcard/TWRP/BACKUPS/' + global.deviceID + '/' + folder + '/'], (data) => {
           resolve(data)
         })
       } else {
@@ -513,7 +528,7 @@ exports.doTWRPRestore = (arg) => {
         if (arg.boot) {
           command += 'B'
         }
-        this.execute(command, () => {
+        this.execute(command.split(' '), () => {
           resolve('Restored')
         })
       } else {
@@ -560,8 +575,7 @@ exports.doTWRPFileRestore = (fileName) => {
   return new Promise(
     (resolve, reject) => {
       if (global.deviceID && global.connection === global.strings.recovery) {
-        let command = 'restore ' + fileName
-        this.execute(command, () => {
+        this.execute(['restore', fileName], () => {
           resolve('Restored')
         })
       } else {
@@ -606,8 +620,7 @@ exports.doTWRPFileRestoreFromComputer = (fileName) => {
   return new Promise(
     (resolve, reject) => {
       if (global.deviceID && global.connection === global.strings.adb) {
-        let command = 'restore ' + fileName
-        this.execute(command, () => {
+        this.execute(['restore', fileName], () => {
           resolve('Restored')
         })
       } else {

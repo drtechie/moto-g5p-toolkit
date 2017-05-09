@@ -45,7 +45,9 @@ exports.getSuperSU = () => {
 }
 
 exports.replaceSpaces = (path) => {
-  if (process.platform === 'linux' || process.platform === 'darwin') {
+  if (process.platform === 'linux') {
+    return path
+  } else if (process.platform === 'darwin') {
     return path.replace(/ /g, '\\ ')
   } else if (process.platform === 'win32') {
     return '"' + path + '"'

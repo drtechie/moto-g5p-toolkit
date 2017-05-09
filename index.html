@@ -141,7 +141,7 @@
       divConnectionStatus.html(`${arg}`)
     })
     ipc.on('statusLabelColorChange', function (event, arg) {
-      divDeviceStatus.removeClass('blue').removeClass('yellow').removeClass('green').removeClass('red').removeClass('orange')
+      divDeviceStatus.removeClass('blue yellow green red orange purple')
       divDeviceStatus.addClass(`${arg}`)
     })
   </script>

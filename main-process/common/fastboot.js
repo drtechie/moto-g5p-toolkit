@@ -1,4 +1,4 @@
-const { exec } = require('child_process')
+const { execFile } = require('child_process')
 const _ = require('lodash')
 const files = require('./files')
 const fastboot = files.getFastbootPath()
@@ -7,8 +7,7 @@ const statusTools = require('./status')
 const { forEach } = require('async-foreach')
 
 exports.execute = (args, callback) => {
-  let cmd = fastboot + ' ' + args
-  exec(cmd, (error, stdout, stderr) => {
+  execFile(fastboot, args, (error, stdout, stderr) => {
     if (error) console.log(error)
     if (stderr) {
       callback(stderr)
@@ -23,7 +22,7 @@ exports.execute = (args, callback) => {
 exports.getPhones = () => {
   return new Promise(
     (resolve, reject) => {
-      this.execute('devices', data => {
+      this.execute(['devices'], data => {
         if (data !== 'undefined') {
           let deviceArray = []
           let devices
@@ -80,7 +79,7 @@ exports.getMoto = () => {
 exports.checkMotoName = (deviceID) => {
   return new Promise(
     (resolve, reject) => {
-      this.execute('getvar product', name => {
+      this.execute(['getvar', 'product'], name => {
         if (_.includes(name, global.strings.deviceName)) {
           statusTools.setDevice(deviceID, global.strings.fastboot)
           resolve(true)
@@ -96,7 +95,7 @@ exports.getUnlockData = () => {
   return new Promise(
     (resolve, reject) => {
       if (global.deviceID && global.connection === global.strings.fastboot) {
-        this.execute('oem get_unlock_data', data => {
+        this.execute(['oem', 'get_unlock_data'], data => {
           data = this.prepareUnlockData(data)
           resolve(data)
         })
@@ -110,7 +109,7 @@ exports.unlockBootloader = (uniqueKey) => {
   return new Promise(
       (resolve, reject) => {
         if (global.deviceID && global.connection === global.strings.fastboot) {
-          this.execute('oem unlock ' + uniqueKey, data => {
+          this.execute(['oem', 'unlock', uniqueKey], data => {
             resolve(data)
           })
         } else {
@@ -141,15 +140,23 @@ exports.waitForFastbootDevice = () => {
       } else {
         let count
         let intervalObject = setInterval(() => {
+          statusTools.setDevice(global.strings.waiting, global.strings.waitingFastboot)
+          statusTools.setStatus('purple')
           count++
           this.getMoto().then(() => {
-            clearInterval(intervalObject)
-            resolve(true)
+            if (global.deviceID && global.connection === global.strings.fastboot) {
+              statusTools.setDevice(global.deviceID, global.connection)
+              statusTools.setStatus('yellow')
+              clearInterval(intervalObject)
+              resolve(true)
+            }
           }).catch(() => {
             // do nothing
           })
           if (count > 5) {
             clearInterval(intervalObject)
+            statusTools.setDevice(global.strings.noDevice, global.strings.noConnection)
+            statusTools.setStatus('red')
             reject(global.strings.noDevice)
           }
         }, 5000)
@@ -161,7 +168,7 @@ exports.rebootToBootloader = () => {
   return new Promise(
     (resolve, reject) => {
       if (global.deviceID && global.connection === global.strings.fastboot) {
-        this.execute('reboot-bootloader', data => {
+        this.execute(['reboot-bootloader'], data => {
           resolve(data)
         })
       } else {
@@ -174,7 +181,7 @@ exports.rebootSystem = () => {
   return new Promise(
     (resolve, reject) => {
       if (global.deviceID && global.connection === global.strings.fastboot) {
-        this.execute('reboot', data => {
+        this.execute(['reboot'], data => {
           resolve(data)
         })
       } else {
@@ -245,7 +252,7 @@ exports.flashTWRP = () => {
   return new Promise(
     (resolve, reject) => {
       if (global.deviceID && global.connection === global.strings.fastboot) {
-        this.execute('flash recovery ' + files.getTWRP(), () => {
+        this.execute(['flash', 'recovery', files.getTWRP()], () => {
           resolve('Recovery flashed. Rebooting to Recovery.')
         })
       } else {
@@ -287,7 +294,7 @@ exports.flashBootImage = () => {
   return new Promise(
     (resolve, reject) => {
       if (global.deviceID && global.connection === global.strings.fastboot) {
-        this.execute('flash boot ' + files.getBootImage(), () => {
+        this.execute(['flash', 'boot', files.getBootImage()], () => {
           resolve('Recovery flashed. Rebooting to Recovery.')
         })
       } else {

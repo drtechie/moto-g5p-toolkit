@@ -1,5 +1,5 @@
 const ipc = require('electron').ipcMain
-const child = require('child_process').exec
+const child = require('child_process').execFile
 const files = require('../common/files')
 
 ipc.on('install-32bit-driver', function (event, arg) {

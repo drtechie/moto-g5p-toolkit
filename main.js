@@ -26,6 +26,11 @@ global.strings.recovery = 'RECOVERY'
 global.strings.adbOffline = 'OFFLINE'
 global.strings.noDevice = 'NO DEVICE'
 global.strings.noConnection = 'NO CONNECTION'
+global.strings.waiting = 'WAITING FOR'
+global.strings.checking = 'CHECKING'
+global.strings.waitingRecovery = 'RECOVERY DEVICE'
+global.strings.waitingFastboot = 'FASTBOOT DEVICE'
+global.strings.waitingAdb = 'ADB DEVICE'
 
 function initialize () {
   let shouldQuit = makeSingleInstance()
@@ -68,9 +73,9 @@ function initialize () {
   })
   app.on('will-quit', function () {
     if (process.platform !== 'win32') {
-      adbTools.execute('kill-server', () => {})
+      adbTools.execute(['kill-server'], () => {})
     } else {
-      adbTools.execute('kill-server')
+      adbTools.execute(['kill-server'])
     }
   })
 }
