@@ -2,6 +2,7 @@ const electron = require('electron')
 const BrowserWindow = electron.BrowserWindow
 const Menu = electron.Menu
 const app = electron.app
+const ipc = require('electron').ipcMain
 
 let template = [{
   label: 'View',
@@ -128,4 +129,9 @@ if (process.platform === 'darwin') {
 app.on('ready', function () {
   const menu = Menu.buildFromTemplate(template)
   Menu.setApplicationMenu(menu)
+})
+
+ipc.on('check-version', function (event, arg) {
+  const version = require('../../package').version
+  event.sender.send('version-reply',  version)
 })

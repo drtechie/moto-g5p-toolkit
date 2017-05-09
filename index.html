@@ -129,6 +129,10 @@
     const divDeviceStatus = $('#device-status')
     const divDeviceID = $('#status-device-id')
     const divConnectionStatus = $('#status-connection')
+    ipc.send('check-version', null)
+    ipc.on('version-reply', function (event, arg) {
+      document.title = `drtechie's Moto G5 Plus Toolkit v${arg}`
+    })
     ipc.send('check-status', null)
     ipc.on('statusDeviceID', function (event, arg) {
       divDeviceID.html(`${arg}`)
