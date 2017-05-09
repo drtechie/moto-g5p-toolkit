@@ -67,7 +67,7 @@ function initialize () {
     }
   })
   app.on('will-quit', function () {
-    adbTools.execute('kill-server')
+    adbTools.execute('kill-server', () => {})
   })
 }
 

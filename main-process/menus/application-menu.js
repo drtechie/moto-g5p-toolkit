@@ -118,7 +118,7 @@ if (process.platform === 'darwin') {
     }]
   })
   // Window menu.
-  template[3].submenu.push({
+  template[2].submenu.push({
     type: 'separator'
   }, {
     label: 'Bring All to Front',
@@ -133,5 +133,5 @@ app.on('ready', function () {
 
 ipc.on('check-version', function (event, arg) {
   const version = require('../../package').version
-  event.sender.send('version-reply',  version)
+  event.sender.send('version-reply', version)
 })
