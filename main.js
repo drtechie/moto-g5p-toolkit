@@ -2,6 +2,7 @@ const path = require('path')
 const glob = require('glob')
 const electron = require('electron')
 const { listenUSB } = require('./main-process/common/status')
+const adbTools = require('./main-process/common/adb')
 
 const BrowserWindow = electron.BrowserWindow
 const app = electron.app
@@ -40,36 +41,33 @@ function initialize () {
     if (process.platform === 'linux') {
       windowOptions.icon = path.join(__dirname, '/assets/app-icon/png/512.png')
     }
-
     global.mainWindow = new BrowserWindow(windowOptions)
     global.mainWindow.loadURL(path.join('file://', __dirname, '/index.html'))
-
     // Launch fullscreen with DevTools open, usage: npm run debug
     if (debug) {
       global.mainWindow.webContents.openDevTools()
       global.mainWindow.maximize()
     }
-
     global.mainWindow.on('closed', function () {
       global.mainWindow = null
     })
-
     listenUSB()
   }
   app.on('ready', function () {
     createWindow()
   })
-
   app.on('window-all-closed', function () {
     if (process.platform !== 'darwin') {
       app.quit()
     }
   })
-
   app.on('activate', function () {
     if (global.mainWindow === null) {
       createWindow()
     }
+  })
+  app.on('will-quit', function () {
+    adbTools.execute('kill-server')
   })
 }
 
