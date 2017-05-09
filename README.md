@@ -2,7 +2,7 @@
 
 [![JavaScript Standard Style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](http://standardjs.com)
 
-This is a desktop app that combines the awesomeness of ES2015 and XDA. The app allows you to unlock the bootloader and root a Motorola G5 Plus smartphone with a few button clicks.
+This is a desktop app that combines the awesomeness of [ES2015](http://babeljs.io/docs/learn-es2015/) and [XDA](https://forum.xda-developers.com/). The app allows you to unlock the bootloader and root a Motorola G5 Plus smartphone with a few button clicks.
 It's built with Electron and hence will work on Windows, macOS and Linux operating systems.
 
 
