@@ -55,7 +55,7 @@ function zipAssets () {
 
   const zipAssets = [{
     name: 'moto-g5p-toolkit-mac.zip',
-    path: path.join(outPath, 'Moto G5+ Toolkit-darwin-x64', 'Electron API Demos.app')
+    path: path.join(outPath, 'Moto G5+ Toolkit-darwin-x64', 'Moto G5+ Toolkit.app')
   }, {
     name: 'moto-g5p-toolkit-windows.zip',
     path: path.join(outPath, 'Moto G5+ Toolkit-win32-ia32')
