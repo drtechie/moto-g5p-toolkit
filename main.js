@@ -67,7 +67,11 @@ function initialize () {
     }
   })
   app.on('will-quit', function () {
-    adbTools.execute('kill-server', () => {})
+    if (process.platform !== 'win32') {
+      adbTools.execute('kill-server', () => {})
+    } else {
+      adbTools.execute('kill-server')
+    }
   })
 }
 
