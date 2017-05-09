@@ -53,14 +53,14 @@ let template = [{
   }, {
     type: 'separator'
   }, {
-    label: 'App Menu Toolkit',
+    label: 'Moto Toolkit',
     click: function (item, focusedWindow) {
       if (focusedWindow) {
         const options = {
           type: 'info',
-          title: 'Application Menu Toolkit',
+          title: 'Moto Toolkit',
           buttons: ['Ok'],
-          message: 'This toolkit is for the Menu section, showing how to create a clickable menu item in the application menu.'
+          message: 'Created by drtechie'
         }
         electron.dialog.showMessageBox(focusedWindow, options, function () {})
       }
@@ -78,45 +78,7 @@ let template = [{
     accelerator: 'CmdOrCtrl+W',
     role: 'close'
   }]
-}, {
-  label: 'Help',
-  role: 'help',
-  submenu: [{
-    label: 'Learn More',
-    click: function () {
-      electron.shell.openExternal('http://electron.atom.io')
-    }
-  }]
 }]
-
-function addUpdateMenuItems (items, position) {
-  const version = electron.app.getVersion()
-  let updateItems = [{
-    label: `Version ${version}`,
-    enabled: false
-  }, {
-    label: 'Checking for Update',
-    enabled: false,
-    key: 'checkingForUpdate'
-  }, {
-    label: 'Check for Update',
-    visible: false,
-    key: 'checkForUpdate',
-    click: function () {
-      require('electron').autoUpdater.checkForUpdates()
-    }
-  }, {
-    label: 'Restart and Install Update',
-    enabled: true,
-    visible: false,
-    key: 'restartToUpdate',
-    click: function () {
-      require('electron').autoUpdater.quitAndInstall()
-    }
-  }]
-
-  items.splice.apply(items, [position, 0].concat(updateItems))
-}
 
 if (process.platform === 'darwin') {
   const name = electron.app.getName()
@@ -161,13 +123,6 @@ if (process.platform === 'darwin') {
     label: 'Bring All to Front',
     role: 'front'
   })
-
-  addUpdateMenuItems(template[0].submenu, 1)
-}
-
-if (process.platform === 'win32') {
-  const helpMenu = template[template.length - 1].submenu
-  addUpdateMenuItems(helpMenu, 0)
 }
 
 app.on('ready', function () {
