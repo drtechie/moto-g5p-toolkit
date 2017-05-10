@@ -192,7 +192,7 @@ exports.waitForRecoveryDevice = () => {
       if (global.deviceID && global.connection === global.strings.recovery) {
         resolve(true)
       } else {
-        let count
+        let count = 0
         let intervalObject = setInterval(() => {
           statusTools.setDevice(global.strings.waiting, global.strings.waitingRecovery)
           statusTools.setStatus('purple')
@@ -224,7 +224,7 @@ exports.waitForADBDevice = () => {
       if (global.deviceID && global.connection === global.strings.adb) {
         resolve(true)
       } else {
-        let count
+        let count = 0
         let intervalObject = setInterval(() => {
           statusTools.setDevice(global.strings.waiting, global.strings.waitingAdb)
           statusTools.setStatus('purple')
@@ -273,7 +273,23 @@ exports.startFlashWlanCustom = () => {
           reject(error)
         })
       } else if (global.deviceID && global.connection === global.strings.fastboot) {
-        reject('Reboot device to recovery mode')
+        fastbootTools.bootTWRP().then(() => {
+          this.waitForRecoveryDevice().then(() => {
+            this.pushWlanCustom().then(() => {
+              this.flashWlanCustom().then((data) => {
+                resolve(data)
+              }).catch((error) => {
+                reject(error)
+              })
+            }).catch((error) => {
+              reject(error)
+            })
+          }).catch((error) => {
+            reject(error)
+          })
+        }).catch((error) => {
+          reject(error)
+        })
       } else if (global.deviceID && global.connection === global.strings.recovery) {
         this.pushWlanCustom().then(() => {
           this.flashWlanCustom().then((data) => {
@@ -313,7 +329,23 @@ exports.startFlashSuperSU = () => {
           reject(error)
         })
       } else if (global.deviceID && global.connection === global.strings.fastboot) {
-        reject('Reboot device to recovery mode')
+        fastbootTools.bootTWRP().then(() => {
+          this.waitForRecoveryDevice().then(() => {
+            this.pushSuperSU().then(() => {
+              this.flashSuperSU().then((data) => {
+                resolve(data)
+              }).catch((error) => {
+                reject(error)
+              })
+            }).catch((error) => {
+              reject(error)
+            })
+          }).catch((error) => {
+            reject(error)
+          })
+        }).catch((error) => {
+          reject(error)
+        })
       } else if (global.deviceID && global.connection === global.strings.recovery) {
         this.pushSuperSU().then(() => {
           this.flashSuperSU().then((data) => {
@@ -471,7 +503,19 @@ exports.createNANDroidBackup = (filename, args) => {
           reject(error)
         })
       } else if (global.deviceID && global.connection === global.strings.fastboot) {
-        reject('Reboot device to recovery mode')
+        fastbootTools.bootTWRP().then(() => {
+          this.waitForRecoveryDevice().then(() => {
+            this.doTWRPBackup(filename, args).then((data) => {
+              resolve(data)
+            }).catch((error) => {
+              reject(error)
+            })
+          }).catch((error) => {
+            reject(error)
+          })
+        }).catch((error) => {
+          reject(error)
+        })
       } else if (global.deviceID && global.connection === global.strings.recovery) {
         this.doTWRPBackup(filename, args).then((data) => {
           resolve(data)
@@ -558,7 +602,19 @@ exports.restoreNANDroidBackup = (args) => {
           reject(error)
         })
       } else if (global.deviceID && global.connection === global.strings.fastboot) {
-        reject('Reboot device to recovery mode')
+        fastbootTools.bootTWRP().then(() => {
+          this.waitForRecoveryDevice().then(() => {
+            this.doTWRPRestore(args).then((data) => {
+              resolve(data)
+            }).catch((error) => {
+              reject(error)
+            })
+          }).catch((error) => {
+            reject(error)
+          })
+        }).catch((error) => {
+          reject(error)
+        })
       } else if (global.deviceID && global.connection === global.strings.recovery) {
         this.doTWRPRestore(args).then((data) => {
           resolve(data)
@@ -603,7 +659,19 @@ exports.restoreNANDroidBackupFromComputer = (fileName) => {
           reject(error)
         })
       } else if (global.deviceID && global.connection === global.strings.fastboot) {
-        reject('Reboot device to recovery mode')
+        fastbootTools.bootTWRP().then(() => {
+          this.waitForRecoveryDevice().then(() => {
+            this.doTWRPFileRestore(fileName).then((data) => {
+              resolve(data)
+            }).catch((error) => {
+              reject(error)
+            })
+          }).catch((error) => {
+            reject(error)
+          })
+        }).catch((error) => {
+          reject(error)
+        })
       } else if (global.deviceID && global.connection === global.strings.recovery) {
         this.doTWRPFileRestore(fileName).then((data) => {
           resolve(data)
@@ -616,7 +684,7 @@ exports.restoreNANDroidBackupFromComputer = (fileName) => {
     })
 }
 
-exports.doTWRPFileRestoreFromComputer = (fileName) => {
+exports.doAndroidFileRestoreFromComputer = (fileName) => {
   return new Promise(
     (resolve, reject) => {
       if (global.deviceID && global.connection === global.strings.adb) {
@@ -633,15 +701,15 @@ exports.restoreAndroidBackupFromComputer = (fileName) => {
   return new Promise(
     (resolve, reject) => {
       if (global.deviceID && global.connection === global.strings.adb) {
-        this.doTWRPFileRestoreFromComputer(fileName).then((data) => {
+        this.doAndroidFileRestoreFromComputer(fileName).then((data) => {
           resolve(data)
         }).catch((error) => {
           reject(error)
         })
       } else if (global.deviceID && global.connection === global.strings.fastboot) {
-        this.rebootSystem().then(() => {
+        fastbootTools.rebootSystem().then(() => {
           this.waitForADBDevice().then(() => {
-            this.doTWRPFileRestore(fileName).then((data) => {
+            this.doAndroidFileRestoreFromComputer(fileName).then((data) => {
               resolve(data)
             }).catch((error) => {
               reject(error)
@@ -655,7 +723,7 @@ exports.restoreAndroidBackupFromComputer = (fileName) => {
       } else if (global.deviceID && global.connection === global.strings.recovery) {
         this.rebootSystem().then(() => {
           this.waitForADBDevice().then(() => {
-            this.doTWRPFileRestore(fileName).then((data) => {
+            this.doAndroidFileRestoreFromComputer(fileName).then((data) => {
               resolve(data)
             }).catch((error) => {
               reject(error)

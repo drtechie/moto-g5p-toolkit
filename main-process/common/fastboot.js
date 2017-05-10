@@ -138,7 +138,7 @@ exports.waitForFastbootDevice = () => {
       if (global.deviceID && global.connection === global.strings.fastboot) {
         resolve(true)
       } else {
-        let count
+        let count = 0
         let intervalObject = setInterval(() => {
           statusTools.setDevice(global.strings.waiting, global.strings.waitingFastboot)
           statusTools.setStatus('purple')
@@ -254,6 +254,19 @@ exports.flashTWRP = () => {
       if (global.deviceID && global.connection === global.strings.fastboot) {
         this.execute(['flash', 'recovery', files.getTWRP()], () => {
           resolve('Recovery flashed. Rebooting to Recovery.')
+        })
+      } else {
+        reject(global.strings.noDevice)
+      }
+    })
+}
+
+exports.bootTWRP = () => {
+  return new Promise(
+    (resolve, reject) => {
+      if (global.deviceID && global.connection === global.strings.fastboot) {
+        this.execute(['boot', files.getTWRP()], () => {
+          resolve('Device booted to Recovery')
         })
       } else {
         reject(global.strings.noDevice)
