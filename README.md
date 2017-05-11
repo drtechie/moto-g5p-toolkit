@@ -5,6 +5,7 @@
 This is a desktop app that combines the awesomeness of [ES2015](http://babeljs.io/docs/learn-es2015/) and [XDA](https://forum.xda-developers.com/). The app allows you to unlock the bootloader and root a Motorola G5 Plus smartphone with a few button clicks.
 It's built with Electron and hence will work on Windows, macOS and Linux operating systems.
 
+The UI is adapted from [Electron API Demos](https://github.com/electron/electron-api-demos). Read [License](https://github.com/drtechie/moto-g5p-toolkit/blob/master/LICENSE.md)
 
 ## Using
 
