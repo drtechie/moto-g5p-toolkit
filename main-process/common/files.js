@@ -30,7 +30,7 @@ exports.get64BitDriver = () => {
 }
 
 exports.getTWRP = () => {
-  let file =  path.resolve(__dirname, '../../files/twrp-3.1.0-0-potter.img')
+  let file = path.resolve(__dirname, '../../files/twrp-3.1.0-0-potter.img')
   if ((process.platform === 'linux' || process.platform === 'win32') && isRunningInAsar()) {
     file = file.replace('app.asar', 'app.asar.unpacked')
   }
@@ -38,7 +38,7 @@ exports.getTWRP = () => {
 }
 
 exports.getBootImage = () => {
-  let file =  path.resolve(__dirname, '../../files/potter_boot_test7.img')
+  let file = path.resolve(__dirname, '../../files/potter_boot_test7.img')
   if ((process.platform === 'linux' || process.platform === 'win32') && isRunningInAsar()) {
     file = file.replace('app.asar', 'app.asar.unpacked')
   }
@@ -46,7 +46,7 @@ exports.getBootImage = () => {
 }
 
 exports.getWlanCustom = () => {
-  let file =  path.resolve(__dirname, '../../files/wlan_custom.zip')
+  let file = path.resolve(__dirname, '../../files/wlan_custom.zip')
   if ((process.platform === 'linux' || process.platform === 'win32') && isRunningInAsar()) {
     file = file.replace('app.asar', 'app.asar.unpacked')
   }
@@ -54,7 +54,7 @@ exports.getWlanCustom = () => {
 }
 
 exports.getSuperSU = () => {
-  let file =  path.resolve(__dirname, '../../files/SR3-SuperSU-v2.79-SR3-20170114223742.zip')
+  let file = path.resolve(__dirname, '../../files/SR3-SuperSU-v2.79-SR3-20170114223742.zip')
   if ((process.platform === 'linux' || process.platform === 'win32') && isRunningInAsar()) {
     file = file.replace('app.asar', 'app.asar.unpacked')
   }
