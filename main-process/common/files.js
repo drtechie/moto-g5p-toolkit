@@ -30,7 +30,7 @@ exports.get64BitDriver = () => {
 }
 
 exports.getTWRP = () => {
-  let file = path.resolve(__dirname, '../../files/twrp-3.1.0-0-potter.img')
+  let file = path.resolve(__dirname, '../../files/twrp-3.1.0-0-n3-potter.img')
   if ((process.platform === 'linux' || process.platform === 'win32') && isRunningInAsar()) {
     file = file.replace('app.asar', 'app.asar.unpacked')
   }
