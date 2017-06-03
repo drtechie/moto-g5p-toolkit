@@ -22,6 +22,7 @@
   <link rel="import" href="sections/recovery/flash-boot-image.html">
   <link rel="import" href="sections/recovery/flash-supersu.html">
   <link rel="import" href="sections/recovery/flash-wlan.html">
+  <link rel="import" href="sections/recovery/flash-stock-rom.html">
   <link rel="import" href="sections/device/more-tools.html">
   <link rel="import" href="sections/device/install-drivers.html">
   <link rel="import" href="sections/backup/create-backup.html">
@@ -30,133 +31,134 @@
 </head>
 <body>
 
-  <nav class="nav js-nav">
-    <header class="nav-header">
-      <h2 class="nav-title">Moto G5+ <strong>Toolkit</strong></h2>
-      <div class="margin-top-10">
-        <a class="ui blue image label" id="device-status">
-          <span id="status-device-id"></span>
-          <div class="detail"><span id="status-connection"></span></div>
-        </a>
-      </div>
-    </header>
-
-    <div class="nav-item u-category-instructions">
-      <h5 class="nav-category">
-        <svg class="nav-icon"><use xlink:href="assets/img/icons.svg#icon-list"></use></svg>
-        Instruction
-      </h5>
-      <button type="button" id="button-detailed" data-section="detailed" class="nav-button">How to use the <em>toolkit</em></button>
-    </div>
-
-    <div class="nav-item u-category-bootloader">
-      <h5 class="nav-category">
-        <svg class="nav-icon"><use xlink:href="assets/img/icons.svg#icon-terminal"></use></svg>
-        Bootloader
-      </h5>
-      <button type="button" id="button-unlock-data" data-section="unlock-data" class="nav-button">Get unlock <em>data</em></button>
-      <button type="button" id="button-unlock-bootloader" data-section="unlock-bootloader" class="nav-button">Unlock <em>bootloader</em> </button>
-    </div>
-
-    <div class="nav-item u-category-recovery">
-      <h5 class="nav-category">
-        <svg class="nav-icon"><use xlink:href="assets/img/icons.svg#icon-flash"></use></svg>
-        Flashing &amp; Recovery
-      </h5>
-      <button type="button" id="button-flash-twrp" data-section="flash-twrp" class="nav-button">Flash <em>TWRP</em> recovery</button>
-      <button type="button" id="button-flash-boot-image" data-section="flash-boot-image" class="nav-button">Flash <em>boot_image</em></button>
-      <button type="button" id="button-flash-wlan-custom" data-section="flash-wlan-custom" class="nav-button">Flash <em>wlan_custom</em></button>
-      <button type="button" id="button-flash-supersu" data-section="flash-supersu" class="nav-button">Flash <em>SuperSU</em></button>
-    </div>
-
-    <div class="nav-item u-category-device">
-      <h5 class="nav-category">
-        <svg class="nav-icon"><use xlink:href="assets/img/icons.svg#icon-mobile"></use></svg>
-        Device
-      </h5>
-      <button type="button" id="button-more-tools" data-section="more-tools" class="nav-button">More <em>tools</em></button>
-      <button type="button" id="button-install-drivers" data-section="install-drivers" class="nav-button">Install <em>Windows drivers</em></button>
-    </div>
-    <div class="nav-item u-category-backup">
-      <h5 class="nav-category">
-        <svg class="nav-icon"><use xlink:href="assets/img/icons.svg#icon-history"></use></svg>
-        Backup
-      </h5>
-      <button type="button" id="button-create-backup" data-section="create-backup" class="nav-button" >Create <em>backup</em></button>
-      <button type="button" id="button-restore-backup" data-section="restore-backup" class="nav-button">Restore <em>backup</em></button>
-    </div>
-
-    <div class="nav-item u-category-credits">
-      <h5 class="nav-category">
-        <svg class="nav-icon"><use xlink:href="assets/img/icons.svg#icon-star"></use></svg>
-        Credits
-      </h5>
-      <button type="button" id="button-credits" data-section="credits" class="nav-button">Thank you <em> devs! </em></button>
-    </div>
-
-    <footer class="nav-footer">
-      <button type="button" id="button-about" data-modal="about" class="nav-footer-button">About</button>
-      <a class="nav-footer-logo" href="https://forum.xda-developers.com/member.php?u=4968033">
-        <div class="nav-footer-icon-wrapper"><svg class="nav-footer-icon"><use xlink:href="assets/img/icons.svg#icon-code"></use></svg></div>
-        <div class="nav-footer-author">by drtechie</div></a>
+<nav class="nav js-nav">
+  <header class="nav-header">
+    <h2 class="nav-title">Moto G5+ <strong>Toolkit</strong></h2>
+    <div class="margin-top-10">
+      <a class="ui blue image label" id="device-status">
+        <span id="status-device-id"></span>
+        <div class="detail"><span id="status-connection"></span></div>
       </a>
-    </footer>
-  </nav>
+    </div>
+  </header>
 
-  <main class="content js-content"></main>
+  <div class="nav-item u-category-instructions">
+    <h5 class="nav-category">
+      <svg class="nav-icon"><use xlink:href="assets/img/icons.svg#icon-list"></use></svg>
+      Instruction
+    </h5>
+    <button type="button" id="button-detailed" data-section="detailed" class="nav-button">How to use the <em>toolkit</em></button>
+  </div>
 
-  <!-- build:remove -->
-  <!-- Connect to server process -->
-  <script>require('electron-connect').client.create()</script>
-  <!-- end:build -->
+  <div class="nav-item u-category-bootloader">
+    <h5 class="nav-category">
+      <svg class="nav-icon"><use xlink:href="assets/img/icons.svg#icon-terminal"></use></svg>
+      Bootloader
+    </h5>
+    <button type="button" id="button-unlock-data" data-section="unlock-data" class="nav-button">Get unlock <em>data</em></button>
+    <button type="button" id="button-unlock-bootloader" data-section="unlock-bootloader" class="nav-button">Unlock <em>bootloader</em> </button>
+  </div>
 
-  <script>
-    require('./assets/imports')
-    require('./assets/ex-links')
-    require('./assets/nav')
-    require('./assets/toolkit-btns')
-    require('./assets/code-blocks')
-    require('./assets/normalize-shortcuts')
-  </script>
+  <div class="nav-item u-category-recovery">
+    <h5 class="nav-category">
+      <svg class="nav-icon"><use xlink:href="assets/img/icons.svg#icon-flash"></use></svg>
+      Flashing &amp; Recovery
+    </h5>
+    <button type="button" id="button-flash-twrp" data-section="flash-twrp" class="nav-button">Flash <em>TWRP</em> recovery</button>
+    <button type="button" id="button-flash-boot-image" data-section="flash-boot-image" class="nav-button">Flash <em>boot_image</em></button>
+    <button type="button" id="button-flash-wlan-custom" data-section="flash-wlan-custom" class="nav-button">Flash <em>wlan_custom</em></button>
+    <button type="button" id="button-flash-supersu" data-section="flash-supersu" class="nav-button">Flash <em>SuperSU</em></button>
+    <button type="button" id="button-flash-stock" data-section="flash-stock-rom" class="nav-button">Flash <em>Stock ROM</em></button>
+  </div>
 
-  <script>window.$ = window.jQuery = require('jquery');</script>
-  <script src="assets/semantic/dist/semantic.min.js"></script>
-  <script>
-    $('.ui.dropdown').dropdown();
-  </script>
-  <script>
-    const ipc = require('electron').ipcRenderer
-    const divDeviceStatus = $('#device-status')
-    const divDeviceID = $('#status-device-id')
-    const divConnectionStatus = $('#status-connection')
-    ipc.send('check-version', null)
-    ipc.on('version-reply', function (event, arg) {
-      document.title = `drtechie's Moto G5 Plus Toolkit v${arg}`
-    })
-    ipc.send('check-status', null)
-    ipc.on('statusDeviceID', function (event, arg) {
-      divDeviceID.html(`${arg}`)
-    })
-    ipc.on('statusConnection', function (event, arg) {
-      divConnectionStatus.html(`${arg}`)
-    })
-    ipc.on('statusLabelColorChange', function (event, arg) {
-      divDeviceStatus.removeClass('blue yellow green red orange purple')
-      divDeviceStatus.addClass(`${arg}`)
-    })
-  </script>
-  <script type="text/javascript">
-    $('#nandroid-backup-dropdown').dropdown({
-      onChange: function(val) {
-        $(this).addClass('loading')
-        $('#restore-partition-system').addClass('disabled').checkbox('uncheck').find('input').attr('disabled', true)
-        $('#restore-partition-data').addClass('disabled').checkbox('uncheck').find('input').attr('disabled', true)
-        $('#restore-partition-cache').addClass('disabled').checkbox('uncheck').find('input').attr('disabled', true)
-        $('#restore-partition-boot').addClass('disabled').checkbox('uncheck').find('input').attr('disabled', true)
-        $('#restore-nandroid-folder').val(val)
-        ipc.send('check-partitions', val)
-      }
-    });
-  </script>
+  <div class="nav-item u-category-device">
+    <h5 class="nav-category">
+      <svg class="nav-icon"><use xlink:href="assets/img/icons.svg#icon-mobile"></use></svg>
+      Device
+    </h5>
+    <button type="button" id="button-more-tools" data-section="more-tools" class="nav-button">More <em>tools</em></button>
+    <button type="button" id="button-install-drivers" data-section="install-drivers" class="nav-button">Install <em>Windows drivers</em></button>
+  </div>
+  <div class="nav-item u-category-backup">
+    <h5 class="nav-category">
+      <svg class="nav-icon"><use xlink:href="assets/img/icons.svg#icon-history"></use></svg>
+      Backup
+    </h5>
+    <button type="button" id="button-create-backup" data-section="create-backup" class="nav-button" >Create <em>backup</em></button>
+    <button type="button" id="button-restore-backup" data-section="restore-backup" class="nav-button">Restore <em>backup</em></button>
+  </div>
+
+  <div class="nav-item u-category-credits">
+    <h5 class="nav-category">
+      <svg class="nav-icon"><use xlink:href="assets/img/icons.svg#icon-star"></use></svg>
+      Credits
+    </h5>
+    <button type="button" id="button-credits" data-section="credits" class="nav-button">Thank you <em> devs! </em></button>
+  </div>
+
+  <footer class="nav-footer">
+    <button type="button" id="button-about" data-modal="about" class="nav-footer-button">About</button>
+    <a class="nav-footer-logo" href="https://forum.xda-developers.com/member.php?u=4968033">
+      <div class="nav-footer-icon-wrapper"><svg class="nav-footer-icon"><use xlink:href="assets/img/icons.svg#icon-code"></use></svg></div>
+      <div class="nav-footer-author">by drtechie</div></a>
+    </a>
+  </footer>
+</nav>
+
+<main class="content js-content"></main>
+
+<!-- build:remove -->
+<!-- Connect to server process -->
+<script>require('electron-connect').client.create()</script>
+<!-- end:build -->
+
+<script>
+  require('./assets/imports')
+  require('./assets/ex-links')
+  require('./assets/nav')
+  require('./assets/toolkit-btns')
+  require('./assets/code-blocks')
+  require('./assets/normalize-shortcuts')
+</script>
+
+<script>window.$ = window.jQuery = require('jquery');</script>
+<script src="assets/semantic/dist/semantic.min.js"></script>
+<script>
+  $('.ui.dropdown').dropdown();
+</script>
+<script>
+  const ipc = require('electron').ipcRenderer
+  const divDeviceStatus = $('#device-status')
+  const divDeviceID = $('#status-device-id')
+  const divConnectionStatus = $('#status-connection')
+  ipc.send('check-version', null)
+  ipc.on('version-reply', function (event, arg) {
+    document.title = `drtechie's Moto G5 Plus Toolkit v${arg}`
+  })
+  ipc.send('check-status', null)
+  ipc.on('statusDeviceID', function (event, arg) {
+    divDeviceID.html(`${arg}`)
+  })
+  ipc.on('statusConnection', function (event, arg) {
+    divConnectionStatus.html(`${arg}`)
+  })
+  ipc.on('statusLabelColorChange', function (event, arg) {
+    divDeviceStatus.removeClass('blue yellow green red orange purple')
+    divDeviceStatus.addClass(`${arg}`)
+  })
+</script>
+<script type="text/javascript">
+  $('#nandroid-backup-dropdown').dropdown({
+    onChange: function(val) {
+      $(this).addClass('loading')
+      $('#restore-partition-system').addClass('disabled').checkbox('uncheck').find('input').attr('disabled', true)
+      $('#restore-partition-data').addClass('disabled').checkbox('uncheck').find('input').attr('disabled', true)
+      $('#restore-partition-cache').addClass('disabled').checkbox('uncheck').find('input').attr('disabled', true)
+      $('#restore-partition-boot').addClass('disabled').checkbox('uncheck').find('input').attr('disabled', true)
+      $('#restore-nandroid-folder').val(val)
+      ipc.send('check-partitions', val)
+    }
+  });
+</script>
 </body>
 </html>

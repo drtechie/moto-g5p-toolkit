@@ -1,0 +1,91 @@
+<template class="task-template">
+  <section id="flash-stock-rom-section" class="section js-section u-category-recovery">
+    <header class="section-header">
+      <div class="section-wrapper">
+        <h1>
+          <svg class="section-icon"><use xlink:href="assets/img/icons.svg#icon-flash"></use></svg>
+          Flash Stock ROM
+        </h1>
+        <h3>This module allows you to flash stock ROM or un-brick your phone.</h3>
+
+        <p>Fastboot access to phone is mandatory.</p>
+      </div>
+    </header>
+
+    <div class="toolkit">
+      <div class="toolkit-wrapper">
+        <button id="flash-stock-instructions-toggle" class="js-container-target toolkit-toggle-button">Get Instructions
+          <div class="toolkit-meta u-avoid-clicks">Read this first</div>
+        </button>
+        <div class="toolkit-box">
+
+          <ol>
+            <li>Before continuing be aware that your phone will get erased. All data will be lost.</li>
+            <li>
+              Download the official firmware from one of these sources. (~1.4GB) <br />
+              <a href="https://www.androidfilehost.com/?a=show&w=files&flid=171014">Link 1</a>
+              <a href="https://mirrors.lolinet.com/firmware/moto/potter/official/RETAIL/">Link 2</a>
+            </li>
+            <li>Unzip the archive to a suitable folder. Now continue to the next step.</li>
+          </ol>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="toolkit">
+      <div class="toolkit-wrapper">
+        <button id="flash-stock-toggle" class="js-container-target toolkit-toggle-button">Flash Stock ROM
+          <div class="toolkit-meta u-avoid-clicks">Phone must have fastboot access</div>
+        </button>
+
+        <div class="toolkit-box">
+          <p>
+            If the phone is connected via <code>ADB</code>, it will
+            rebooted to <code>Fastboot</code> mode.
+          </p>
+
+          <p>
+            Select the folder with the firmware files.
+          </p>
+
+
+          <form class="ui form">
+            <div class="toolkit-controls">
+              <button class="toolkit-button" id="flash-stock-rom-button">Select Folder</button>
+              <span class="toolkit-response" id="flash-stock-rom-button-reply"></span>
+            </div>
+          </form>
+
+          <div class="toolkit-protip" id="flash-boot-image-info-wrapper">
+            <ol>
+              <li>The script will flash the files as per <code>flashfile.xml</code>. </li>
+              <li>Flashing will start as soon as you select the folder. </li>
+              <li>You can see the output of the flashing in the Logs section below.</li>
+            </ol>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="toolkit">
+      <div class="toolkit-wrapper">
+        <button id="flash-stock-logs-toggle" class="js-container-target toolkit-toggle-button">Logs
+          <div class="toolkit-meta u-avoid-clicks">See what is happening</div>
+        </button>
+
+        <div class="toolkit-box">
+          <div class="logs" id="flash-stock-rom-logs">
+            <h5>Logs will appear here</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+      require('./renderer-process/recovery/flash-stock-rom')
+    </script>
+
+  </section>
+</template>

@@ -1,4 +1,4 @@
-const { execFile } = require('child_process')
+const { execFile, spawn } = require('child_process')
 const _ = require('lodash')
 const files = require('./files')
 const fastboot = files.getFastbootPath()
@@ -17,6 +17,24 @@ exports.execute = (args, callback) => {
       callback()
     }
   })
+}
+
+exports.spawnCommand = (args) => {
+  return new Promise(
+    (resolve, reject) => {
+      const spawning = spawn(fastboot, args)
+      spawning.stdout.on('data', (data) => {
+        global.mainWindow.webContents.send('flash-stock-rom-logs', data)
+      })
+
+      spawning.stderr.on('data', (data) => {
+        global.mainWindow.webContents.send('flash-stock-rom-logs', data)
+      })
+
+      spawning.stderr.on('close', (data) => {
+        resolve()
+      })
+    })
 }
 
 exports.getPhones = () => {

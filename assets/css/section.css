@@ -49,3 +49,15 @@
   vertical-align: middle;
   margin-right: .5em;
 }
+
+.logs {
+  font-size: 13px;
+  overflow: auto;
+  padding: 1em;
+  margin: 0;
+  border-radius: 4px;
+  border: 1px solid;
+  border-color: var(--color-border);
+  background-color: white;
+  color: #000000;
+}
