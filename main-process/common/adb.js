@@ -5,6 +5,7 @@ const fastbootTools = require('./fastboot')
 const statusTools = require('./status')
 const adb = files.getAdbPath()
 const { forEach } = require('async-foreach')
+const path = require('path')
 
 exports.execute = (args, callback) => {
   execFile(adb, args, (error, stdout, stderr) => {
@@ -730,6 +731,68 @@ exports.restoreAndroidBackupFromComputer = (fileName) => {
             })
           }).catch((error) => {
             reject(error)
+          })
+        }).catch((error) => {
+          reject(error)
+        })
+      } else {
+        reject(global.strings.noDevice)
+      }
+    })
+}
+
+exports.pushZIPFile = (filename) => {
+  return new Promise(
+    (resolve, reject) => {
+      if (global.deviceID && global.connection === global.strings.recovery) {
+        this.execute(['push', path.resolve(filename[0]), '/sdcard/'], () => {
+          resolve('File Pushed')
+        })
+      } else {
+        reject('Pushing file failed.')
+      }
+    })
+}
+
+exports.flashZIPFile = (filename) => {
+  return new Promise(
+    (resolve, reject) => {
+      if (global.deviceID && global.connection === global.strings.adb) {
+        this.rebootToRecovery().then(() => {
+          this.waitForRecoveryDevice().then(() => {
+            this.pushZIPFile(filename).then(() => {
+              this.execute(['shell', 'twrp', 'install', '/sdcard/' + path.basename(filename[0])], () => {
+                resolve('Installed ZIP')
+              })
+            }).catch((error) => {
+              reject(error)
+            })
+          }).catch((error) => {
+            reject(error)
+          })
+        }).catch((error) => {
+          reject(error)
+        })
+      } else if (global.deviceID && global.connection === global.strings.fastboot) {
+        fastbootTools.bootTWRP().then(() => {
+          this.waitForRecoveryDevice().then(() => {
+            this.pushZIPFile(filename).then(() => {
+              this.execute(['shell', 'twrp', 'install', '/sdcard/' + path.basename(filename[0])], () => {
+                resolve('Installed ZIP')
+              })
+            }).catch((error) => {
+              reject(error)
+            })
+          }).catch((error) => {
+            reject(error)
+          })
+        }).catch((error) => {
+          reject(error)
+        })
+      } else if (global.deviceID && global.connection === global.strings.recovery) {
+        this.pushZIPFile(filename).then(() => {
+          this.execute(['shell', 'twrp', 'install', '/sdcard/' + path.basename(filename[0])], () => {
+            resolve('Installed ZIP')
           })
         }).catch((error) => {
           reject(error)

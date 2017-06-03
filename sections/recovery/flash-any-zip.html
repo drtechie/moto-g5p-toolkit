@@ -1,10 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+<template class="task-template">
+  <section id="flash-any-zip-section" class="section js-section u-category-recovery">
+    <header class="section-header">
+      <div class="section-wrapper">
+        <h1>
+          <svg class="section-icon"><use xlink:href="assets/img/icons.svg#icon-flash"></use></svg>
+          Flash any ZIP
+        </h1>
+        <h3>This module allows you to flash any chosen ZIP.</h3>
+
+        <p>TWRP Recovery is mandatory.</p>
+      </div>
+    </header>
+
+    <div class="toolkit">
+      <div class="toolkit-wrapper">
+        <button id="wlan-toggle" class="js-container-target toolkit-toggle-button">Flash any ZIP file
+          <div class="toolkit-meta u-avoid-clicks">Choose and flash any ZIP file</div>
+        </button>
+        <div class="toolkit-box">
+          <p>
+            Phone will be rebooted to <code>Recovery</code> mode to flash the zip file.
+          </p>
+
+          <form class="ui form">
+            <div class="toolkit-controls">
+              <button class="toolkit-button" id="flash-any-zip-button">Choose file</button>
+              <span class="toolkit-response" id="flash-any-zip-button-reply"></span>
+            </div>
+          </form>
+
+        </div>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+      require('./renderer-process/recovery/flash-any-zip')
+    </script>
+
+  </section>
+</template>
