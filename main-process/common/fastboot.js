@@ -5,6 +5,7 @@ const fastboot = files.getFastbootPath()
 const adbTools = require('./adb')
 const statusTools = require('./status')
 const { forEach } = require('async-foreach')
+const isRunningInAsar = require('electron-is-running-in-asar')
 
 exports.execute = (args, callback) => {
   execFile(fastboot, args, (error, stdout, stderr) => {
@@ -22,7 +23,11 @@ exports.execute = (args, callback) => {
 exports.spawnCommand = (args) => {
   return new Promise(
     (resolve, reject) => {
-      const spawning = spawn(fastboot, args)
+      let fastbootFile = fastboot
+      if ((process.platform === 'linux' || process.platform === 'win32') && isRunningInAsar()) {
+        fastbootFile = fastboot.replace('app.asar', 'app.asar.unpacked')
+      }
+      const spawning = spawn(fastbootFile, args)
       spawning.stdout.on('data', (data) => {
         global.mainWindow.webContents.send('flash-stock-rom-logs', data)
       })
