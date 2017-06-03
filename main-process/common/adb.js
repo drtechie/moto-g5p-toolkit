@@ -761,9 +761,11 @@ exports.flashZIPFile = (filename) => {
         this.rebootToRecovery().then(() => {
           this.waitForRecoveryDevice().then(() => {
             this.pushZIPFile(filename).then(() => {
-              this.execute(['shell', 'twrp', 'install', '/sdcard/' + path.basename(filename[0])], () => {
-                resolve('Installed ZIP')
-              })
+              setTimeout(() => {
+                this.execute(['shell', 'twrp', 'install', '/sdcard/' + path.basename(filename[0])], () => {
+                  resolve('Installed ZIP')
+                })
+              }, 14000)
             }).catch((error) => {
               reject(error)
             })
@@ -777,9 +779,11 @@ exports.flashZIPFile = (filename) => {
         fastbootTools.bootTWRP().then(() => {
           this.waitForRecoveryDevice().then(() => {
             this.pushZIPFile(filename).then(() => {
-              this.execute(['shell', 'twrp', 'install', '/sdcard/' + path.basename(filename[0])], () => {
-                resolve('Installed ZIP')
-              })
+              setTimeout(() => {
+                this.execute(['shell', 'twrp', 'install', '/sdcard/' + path.basename(filename[0])], () => {
+                  resolve('Installed ZIP')
+                })
+              }, 14000)
             }).catch((error) => {
               reject(error)
             })
