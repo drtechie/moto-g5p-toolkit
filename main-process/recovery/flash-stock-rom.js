@@ -30,6 +30,7 @@ ipc.on('flash-stock-rom', function (event, arg) {
             if (global.deviceID && (global.connection === global.strings.adb || global.connection === global.strings.recovery)) {
               adbTools.rebootToBootloader().then(() => {
                 fastbootTools.waitForFastbootDevice().then(() => {
+                  event.sender.send('flash-stock-rom-button-reply', 'Flashing... Check logs')
                   doFlashStockROM(steps, foldername).then(() => {
                     event.sender.send('flash-stock-rom-logs', 'DONE, Reboot your phone!')
                   }).catch(() => {
@@ -42,6 +43,7 @@ ipc.on('flash-stock-rom', function (event, arg) {
                 global.mainWindow.webContents.send('flash-stock-rom-logs', 'Error occured when rebooting')
               })
             } else if (global.deviceID && global.connection === global.strings.fastboot) {
+              event.sender.send('flash-stock-rom-button-reply', 'Flashing... Check logs')
               doFlashStockROM(steps, foldername).then(() => {
                 global.mainWindow.webContents.send('flash-stock-rom-logs', 'DONE, Reboot your phone!')
               }).catch(() => {
